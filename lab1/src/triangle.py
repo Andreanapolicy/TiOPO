@@ -1,6 +1,10 @@
 import sys
 
 NOT_TRIANGLE_ERROR = 'не треугольник'
+UNDEFINED_ERROR = 'неизвестная ошибка'
+USUAL_TRIANGLE = 'обычный'
+ISOSCELES_TRIANGLE = 'равнобедренный'
+EQUILATERAL_TRIANGLE = 'равносторонний'
 
 def validateArgs(args: list[str]) -> None:
     def checkArgsCount() -> None:
@@ -14,7 +18,7 @@ def validateArgs(args: list[str]) -> None:
 
     def checkArgsValue() -> None:
         for element in args:
-            if element < 0:
+            if int(element) < 0:
                 raise ValueError(NOT_TRIANGLE_ERROR)
 
 
@@ -29,5 +33,7 @@ try:
     args.pop(0)
     validateArgs(args)
     print('Ok, maybe its triangle, man')
-except Exception as error:
+except ValueError as error:
     print(error)
+except Exception:
+    print(UNDEFINED_ERROR)
