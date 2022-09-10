@@ -25,8 +25,9 @@ def validateArgs(args: list[str]) -> None:
 
 
 try:
-    args = sys.argv.pop(0)
-    validateArgs(sys.argv)
+    args = sys.argv
+    args.pop(0)
+    validateArgs(args)
     print('Ok, maybe its triangle, man')
 except Exception as error:
     print(error)
