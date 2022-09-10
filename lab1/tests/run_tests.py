@@ -1,7 +1,11 @@
 import sys
 import os.path
+import subprocess
 
 OUTPUT_PATH = '~output/result.txt'
+SRC_PATH = '../src/triangle.py'
+SUCCESS_MESSAGE = 'sucсess'
+ERROR_MESSAGE = 'error'
 
 class TestCase:
     def __init__(self, params, result):
@@ -26,7 +30,16 @@ def parseTestCases(filePath: str) -> list[TestCase]:
         return testCases
 
 def runTests(testCases: list[TestCase], outputPath: str) -> None:
-    print(testCases, outputPath)
+    index = 1
+    os.makedirs(os.path.dirname(outputPath), exist_ok=True)
+    with open(outputPath, "w") as file:
+        for testCase in testCases:
+            process = subprocess.Popen(['py', '-3', SRC_PATH, testCase.params], stdout=subprocess.PIPE, shell=True)
+            (binaryOutput, err) = process.communicate()
+            output = binaryOutput.decode('cp1251').replace('\n', '')
+            
+            file.write(str(index) + ' - ' + (SUCCESS_MESSAGE if output == testCase.result else ERROR_MESSAGE) + '\n')
+            index += 1
 
 
 try:
