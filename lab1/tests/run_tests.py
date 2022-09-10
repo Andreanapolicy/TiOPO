@@ -4,7 +4,7 @@ import subprocess
 
 OUTPUT_PATH = '~output/result.txt'
 SRC_PATH = '../src/triangle.py'
-SUCCESS_MESSAGE = 'sucсess'
+SUCCESS_MESSAGE = 'success'
 ERROR_MESSAGE = 'error'
 
 class TestCase:
@@ -36,8 +36,7 @@ def runTests(testCases: list[TestCase], outputPath: str) -> None:
         for testCase in testCases:
             process = subprocess.Popen(['py', '-3', SRC_PATH, testCase.params], stdout=subprocess.PIPE, shell=True)
             (binaryOutput, err) = process.communicate()
-            output = binaryOutput.decode('cp1251').replace('\n', '')
-            
+            output = binaryOutput.replace(b'\r', b'').decode('cp1251').replace('\n', '')
             file.write(str(index) + ' - ' + (SUCCESS_MESSAGE if output == testCase.result else ERROR_MESSAGE) + '\n')
             index += 1
 
