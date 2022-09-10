@@ -42,10 +42,10 @@ def getTriangleType(firstLine: int, secondLine: int, thirdLine: int) -> str:
     if not isTriangle():
         return NOT_TRIANGLE_ERROR
 
-    if not isEquilateralTriangle():
+    if isEquilateralTriangle():
         return EQUILATERAL_TRIANGLE
 
-    if not isIsoscelesTriangle():
+    if isIsoscelesTriangle():
         return ISOSCELES_TRIANGLE
 
     return USUAL_TRIANGLE
