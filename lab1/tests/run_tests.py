@@ -34,7 +34,7 @@ def runTests(testCases: list[TestCase], outputPath: str) -> None:
     os.makedirs(os.path.dirname(outputPath), exist_ok=True)
     with open(outputPath, "w") as file:
         for testCase in testCases:
-            process = subprocess.Popen(['py', '-3', SRC_PATH, testCase.params], stdout=subprocess.PIPE, shell=True)
+            process = subprocess.Popen(['py', '-3', SRC_PATH, *testCase.params.split()], stdout=subprocess.PIPE, shell=True)
             (binaryOutput, err) = process.communicate()
             output = binaryOutput.replace(b'\r', b'').decode('cp1251').replace('\n', '')
             file.write(str(index) + ' - ' + (SUCCESS_MESSAGE if output == testCase.result else ERROR_MESSAGE) + '\n')
