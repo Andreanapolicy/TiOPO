@@ -30,7 +30,7 @@ def validateArgs(args: list[str]) -> None:
 
 def getTriangleType(firstLine: int, secondLine: int, thirdLine: int) -> str:
     def isTriangle() -> bool:
-        return firstLine + secondLine > thirdLine or thirdLine + secondLine > firstLine or firstLine + thirdLine > secondLine
+        return firstLine + secondLine > thirdLine and thirdLine + secondLine > firstLine and firstLine + thirdLine > secondLine
 
     def isIsoscelesTriangle() -> bool:
         return firstLine == secondLine or thirdLine == secondLine or firstLine == thirdLine
