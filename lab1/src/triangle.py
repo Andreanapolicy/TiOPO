@@ -1,4 +1,5 @@
 import sys
+import math
 
 NOT_TRIANGLE_ERROR = 'не треугольник'
 UNDEFINED_ERROR = 'неизвестная ошибка'
@@ -7,36 +8,43 @@ ISOSCELES_TRIANGLE = 'равнобедренный'
 EQUILATERAL_TRIANGLE = 'равносторонний'
 
 def validateArgs(args: list[str]) -> None:
+    def isfloat(num):
+        try:
+            float(num)
+            return True
+        except ValueError:
+            return False
+
     def checkArgsCount() -> None:
         if len(args) != 3:
-            raise ValueError(UNDEFINED_ERROR)
+            raise RuntimeError(UNDEFINED_ERROR)
 
     def checkArgsType() -> None:
         for element in args:
-            if not element.isdigit():
-                raise ValueError(UNDEFINED_ERROR)
+            if not isfloat(element):
+                raise RuntimeError(UNDEFINED_ERROR)
 
     def checkArgsValue() -> None:
         for element in args:
-            if int(element) < 0:
-                raise ValueError(UNDEFINED_ERROR)
+            if element < 0:
+                raise RuntimeError(UNDEFINED_ERROR)
 
 
     checkArgsCount()
     checkArgsType()
-    args = [int(element) for element in args]
+    args = [float(element) for element in args]
     checkArgsValue()
 
 
-def getTriangleType(firstLine: int, secondLine: int, thirdLine: int) -> str:
+def getTriangleType(firstLine: float, secondLine: float, thirdLine: float) -> str:
     def isTriangle() -> bool:
         return firstLine + secondLine > thirdLine and thirdLine + secondLine > firstLine and firstLine + thirdLine > secondLine
 
     def isIsoscelesTriangle() -> bool:
-        return firstLine == secondLine or thirdLine == secondLine or firstLine == thirdLine
+        return math.isclose(firstLine, secondLine, rel_tol=1e-14, abs_tol=0.0) or math.isclose(thirdLine, secondLine, rel_tol=1e-14, abs_tol=0.0) or math.isclose(firstLine, thirdLine, rel_tol=1e-14, abs_tol=0.0)
 
     def isEquilateralTriangle() -> bool:
-        return firstLine == secondLine and thirdLine == secondLine
+        return math.isclose(firstLine, secondLine, rel_tol=1e-14, abs_tol=0.0) and math.isclose(thirdLine, secondLine, rel_tol=1e-14, abs_tol=0.0)
 
 
     if not isTriangle():
@@ -55,8 +63,8 @@ try:
     args = sys.argv
     args.pop(0)
     validateArgs(args)
-    print(getTriangleType(int(args[0]), int(args[1]), int(args[2])))
-except ValueError as error:
+    print(getTriangleType(float(args[0]), float(args[1]), float(args[2])))
+except RuntimeError as error:
     print(error)
 except Exception:
     print(UNDEFINED_ERROR)
