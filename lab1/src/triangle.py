@@ -40,14 +40,21 @@ def getTriangleType(firstLine: float, secondLine: float, thirdLine: float) -> st
     def isTriangle() -> bool:
         return firstLine + secondLine > thirdLine and thirdLine + secondLine > firstLine and firstLine + thirdLine > secondLine
 
+    def isValidLinesValue() -> bool:
+        MAX_VALID_LINE_VALUE = 2147483647
+        MIN_VALID_LINE_VALUE = 0.001
+
+        return (firstLine >= MIN_VALID_LINE_VALUE) and (firstLine <= MAX_VALID_LINE_VALUE) \
+               and (secondLine >= MIN_VALID_LINE_VALUE) and (secondLine <= MAX_VALID_LINE_VALUE) \
+               and (thirdLine >= MIN_VALID_LINE_VALUE) and (thirdLine <= MAX_VALID_LINE_VALUE)
+
     def isIsoscelesTriangle() -> bool:
         return math.isclose(firstLine, secondLine, rel_tol=1e-14, abs_tol=0.0) or math.isclose(thirdLine, secondLine, rel_tol=1e-14, abs_tol=0.0) or math.isclose(firstLine, thirdLine, rel_tol=1e-14, abs_tol=0.0)
 
     def isEquilateralTriangle() -> bool:
         return math.isclose(firstLine, secondLine, rel_tol=1e-14, abs_tol=0.0) and math.isclose(thirdLine, secondLine, rel_tol=1e-14, abs_tol=0.0)
 
-
-    if not isTriangle():
+    if not isValidLinesValue() or not isTriangle():
         return NOT_TRIANGLE_ERROR
 
     if isEquilateralTriangle():
