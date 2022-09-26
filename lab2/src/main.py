@@ -24,7 +24,9 @@ def getAllUrlResponses(links):
     [convertedLinks.append(convertLinkToAbsolutePath(URL, link)) for link in getUniqueList(links)]
     urlResponseList = []
     [urlResponseList.append(getUrlResponse(link)) for link in convertedLinks]
+    return urlResponseList
 
 
-
-getAllUrlResponses(getAllLinksFromDocument(getHtmlDocument(URL)))
+links = getAllLinksFromDocument(getHtmlDocument(URL))
+responses = getAllUrlResponses(links)
+print(responses)
