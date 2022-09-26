@@ -23,7 +23,7 @@ def getAllUrlResponses(links):
     convertedLinks = []
     [convertedLinks.append(convertLinkToAbsolutePath(URL, link)) for link in getUniqueList(links)]
     urlResponseList = []
-    [urlResponseList.append(getUrlResponse(link)) for link in convertedLinks]
+    [urlResponseList.append(getUrlResponse(link)) for link in list(filter(None, convertedLinks))]
     return urlResponseList
 
 
