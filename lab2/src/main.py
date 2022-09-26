@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-from libs.Url import convertLinkToAbsolutePath, getUniqueList
+from libs.Url import convertLinkToAbsolutePath
+from libs.Common import getUniqueList
 
 URL = 'http://links.qatl.ru/'
 
@@ -25,6 +26,7 @@ def getAllLinksFromDocument(document):
 def getAllUrlResponses(links):
     convertedLinks = []
     [convertedLinks.append(convertLinkToAbsolutePath(URL, link)) for link in getUniqueList(links)]
+
 
 
 getAllUrlResponses(getAllLinksFromDocument(getHtmlDocument(URL)))

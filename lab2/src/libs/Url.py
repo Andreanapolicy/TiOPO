@@ -6,7 +6,3 @@ def convertLinkToAbsolutePath(mainUrl, link):
         return link
 
     return mainUrl + link
-
-
-def getUniqueList(links):
-    return list(set(links))
