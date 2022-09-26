@@ -3,7 +3,7 @@ import requests
 class UrlResponse:
     def __init__(self, url, code):
         self.url = url
-        self.url = code
+        self.code = code
 
 
 def getUrlResponse(link):

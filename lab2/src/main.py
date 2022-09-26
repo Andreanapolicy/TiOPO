@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from libs.Url import convertLinkToAbsolutePath
 from libs.Common import getUniqueList
 from libs.UrlResponse import getUrlResponse
+from libs.Reporter import writeUrlResponseReport
 
 URL = 'http://links.qatl.ru/'
 
@@ -29,4 +30,5 @@ def getAllUrlResponses(links):
 
 links = getAllLinksFromDocument(getHtmlDocument(URL))
 responses = getAllUrlResponses(links)
+writeUrlResponseReport(responses)
 print(responses)
