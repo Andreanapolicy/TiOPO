@@ -30,4 +30,3 @@ def getAllUrlResponses(links):
 links = getAllLinksFromDocument(getHtmlDocument(URL))
 responses = getAllUrlResponses(links)
 writeUrlResponseReport(responses)
-print(responses)
