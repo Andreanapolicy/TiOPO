@@ -7,7 +7,6 @@ from libs.Reporter import writeUrlResponseReport
 
 URL = 'http://links.qatl.ru/'
 
-
 def getHtmlDocument(url):
     html_text = requests.get(url).text
     return BeautifulSoup(html_text, 'html.parser')
