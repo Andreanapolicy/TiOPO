@@ -9,7 +9,7 @@ def splitResults(results):
     failureResponses = []
 
     for response in results:
-        if response.code == 200:
+        if response.code < 400:
             successResponses.append(response)
         else:
             failureResponses.append(response)
