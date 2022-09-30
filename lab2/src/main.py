@@ -27,7 +27,7 @@ def getAllUrlResponses(links):
     return urlResponseList
 
 
-def processAllLinksFromSite(siteURL, linksToVisit, foundLinks):
+def processAllLinksFromSite(linksToVisit, foundLinks):
     for link in linksToVisit:
         newLinks = getAllLinksFromDocument(getHtmlDocument(link))
         newLinks = [convertLinkToAbsolutePath(URL, link) for link in getUniqueList(newLinks)]
@@ -41,7 +41,7 @@ def processAllLinksFromSite(siteURL, linksToVisit, foundLinks):
 
 linksToVisit = [URL]
 foundLinks = [URL]
-processAllLinksFromSite(URL, linksToVisit, foundLinks)
+processAllLinksFromSite(linksToVisit, foundLinks)
 
 responses = getAllUrlResponses(foundLinks)
 writeUrlResponseReport(responses)
