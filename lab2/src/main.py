@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from libs.Url import convertLinkToAbsolutePath
 from libs.Common import getUniqueList
-from libs.UrlResponse import getUrlResponse
+from libs.UrlResponse import getUrlResponse, getOnlyAvailableLinks
 from libs.Reporter import writeUrlResponseReport
 
 URL = 'http://links.qatl.ru/'
@@ -27,6 +27,21 @@ def getAllUrlResponses(links):
     return urlResponseList
 
 
-links = getAllLinksFromDocument(getHtmlDocument(URL))
-responses = getAllUrlResponses(links)
+def processAllLinksFromSite(siteURL, linksToVisit, foundLinks):
+    for link in linksToVisit:
+        newLinks = getAllLinksFromDocument(getHtmlDocument(link))
+        newLinks = [convertLinkToAbsolutePath(URL, link) for link in getUniqueList(newLinks)]
+        newLinks = list(set(newLinks) - set(foundLinks))
+        newLinks = list(filter(None, newLinks))
+        foundLinks += newLinks
+        availableLinks = []
+        [availableLinks.append(linkResponse) for linkResponse in getOnlyAvailableLinks(newLinks)]
+        linksToVisit += availableLinks
+
+
+linksToVisit = [URL]
+foundLinks = [URL]
+processAllLinksFromSite(URL, linksToVisit, foundLinks)
+
+responses = getAllUrlResponses(foundLinks)
 writeUrlResponseReport(responses)
