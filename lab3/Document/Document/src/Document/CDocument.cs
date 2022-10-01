@@ -46,7 +46,13 @@ namespace Document.src.Document
 
         public void ReplaceParagraphText(int index, string text)
         {
-            throw new NotImplementedException();
+            if (index > m_items.Count)
+            {
+                throw new ArgumentOutOfRangeException("Index is out of range");
+            }
+
+            IDocumentItem item = m_items[index];
+            item.GetItem().SetText(text);
         }
 
         public void SetTitle(string title)
