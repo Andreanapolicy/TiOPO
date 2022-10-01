@@ -2,13 +2,8 @@ using NUnit.Framework;
 
 namespace DocumentTests
 {
-    public class Tests
+    public class DocumentTests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [Test]
         public void Test1()
         {

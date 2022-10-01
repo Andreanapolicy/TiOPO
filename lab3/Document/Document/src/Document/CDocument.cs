@@ -29,7 +29,13 @@ namespace Document.src.Document
 
         public IParagraph InsertParagraph(string text, int position)
         {
-            throw new NotImplementedException();
+            IParagraph paragraph = new CParagraph(text, ref m_history);
+            IDocumentItem newDocumentItem = new CDocumentItem(paragraph);
+            ICommand insertParagraphCommand = new CInsertDocumentItemCommand(ref m_items, ref newDocumentItem, position);
+
+            m_history.AddAndExecuteCommand(ref insertParagraphCommand);
+
+            return paragraph;
         }
 
         public void RemoveItem(int index)
