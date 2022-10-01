@@ -4,7 +4,18 @@
     {
         public static void Main()
         {
-            Console.WriteLine("hello");
+            string test = "text";
+
+            Console.WriteLine(test);
+
+            changeString(ref test);
+
+            Console.WriteLine(test);
+        }
+
+        public static void changeString(ref string text)
+        {
+            text = "text1";
         }
     }
 }

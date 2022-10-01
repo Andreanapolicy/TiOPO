@@ -1,4 +1,5 @@
-﻿using Document.src.History;
+﻿using Document.src.Command;
+using Document.src.History;
 
 namespace Document.src.Paragraph
 {
@@ -17,7 +18,8 @@ namespace Document.src.Paragraph
 
         public void SetText(string text)
         {
-            m_history.AddAndExecuteCommand(new CReplaceTextParagraphCommand(m_text, text));
+            ICommand setTextCommand = new CReplaceTextParagraphCommand(ref m_text, ref text);
+            m_history.AddAndExecuteCommand(ref setTextCommand);
         }
 
         private string m_text;
