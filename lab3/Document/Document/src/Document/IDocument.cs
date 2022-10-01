@@ -1,4 +1,5 @@
-﻿using Document.src.Paragraph;
+﻿using Document.src.DocumentItem;
+using Document.src.Paragraph;
 
 namespace Document.src.Document
 {
@@ -6,7 +7,7 @@ namespace Document.src.Document
     {
 		IParagraph InsertParagraph(string text, int position);
 
-		CDocumentItem GetItem(int index);
+		IDocumentItem GetItem(int index);
 
 		void SetTitle(string title);
 
