@@ -15,13 +15,9 @@ namespace Document.src.Document
 
 		int GetItemsCount();
 
-		void ResizeImage(int index, int width, int height);
-
 		void ReplaceParagraphText(int index, string text);
 
 		void RemoveItem(int index);
-
-		void Save(string path);
 
 		bool CanUndo();
 		
