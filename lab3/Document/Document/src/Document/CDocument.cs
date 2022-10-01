@@ -40,7 +40,8 @@ namespace Document.src.Document
 
         public void RemoveItem(int index)
         {
-            throw new NotImplementedException();
+            ICommand removeItemCommand = new CRemoveItemCommand(ref m_items, index);
+            m_history.AddAndExecuteCommand(ref removeItemCommand);
         }
 
         public void ReplaceParagraphText(int index, string text)
