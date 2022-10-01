@@ -1,8 +1,10 @@
-﻿namespace Document.src.Paragraph
+﻿using Document.src.History;
+
+namespace Document.src.Paragraph
 {
     class CParagraph : IParagraph
     {
-        CParagraph(string text, IHistory history)
+        CParagraph(string text, ref IHistory history)
         {
             m_text = text;
             m_history = history;

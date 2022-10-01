@@ -1,4 +1,6 @@
-﻿namespace Document.src.History
+﻿using Document.src.Command;
+
+namespace Document.src.History
 {
     interface IHistory
     {
@@ -10,6 +12,6 @@
 
         void Redo();
 
-        void AddAndExecuteCommand(ICommand command);
+        void AddAndExecuteCommand(ref ICommand command);
     }
 }
