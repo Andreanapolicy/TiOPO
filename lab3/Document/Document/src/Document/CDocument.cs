@@ -1,4 +1,5 @@
-﻿using Document.src.DocumentItem;
+﻿using Document.src.Command;
+using Document.src.DocumentItem;
 using Document.src.History;
 using Document.src.Paragraph;
 
@@ -13,7 +14,7 @@ namespace Document.src.Document
 
         public IDocumentItem GetItem(int index)
         {
-            throw new NotImplementedException();
+            return m_items.ElementAt(index);
         }
 
         public int GetItemsCount()
@@ -43,7 +44,8 @@ namespace Document.src.Document
 
         public void SetTitle(string title)
         {
-            throw new NotImplementedException();
+            ICommand setTitleCommand = new CChangeTitleCommand(ref m_title, ref title);
+            m_history.AddAndExecuteCommand(ref setTitleCommand);
         }
 
         public bool CanRedo()
