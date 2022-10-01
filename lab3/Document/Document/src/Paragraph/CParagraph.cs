@@ -5,7 +5,7 @@ namespace Document.src.Paragraph
 {
     class CParagraph : IParagraph
     {
-        CParagraph(string text, ref IHistory history)
+        public CParagraph(string text, ref IHistory history)
         {
             m_text = text;
             m_history = history;
