@@ -3,7 +3,7 @@ using Document.src.History;
 
 namespace Document.src.Paragraph
 {
-    class CParagraph : IParagraph
+    public class CParagraph : IParagraph
     {
         public CParagraph(string text, ref IHistory history)
         {

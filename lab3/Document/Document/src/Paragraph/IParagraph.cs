@@ -1,6 +1,6 @@
 ﻿namespace Document.src.Paragraph
 {
-    interface IParagraph
+    public interface IParagraph
     {
         void SetText(string text);
 

@@ -2,15 +2,17 @@
 
 namespace Document.src.History
 {
-    class CHistory : IHistory
+    public class CHistory : IHistory
     {
         public bool CanRedo()
         {
+            // log some information
             return m_next > 0;
         }
 
         public bool CanUndo()
         {
+            // log some information
             return m_next < m_commands.Count;
         }
 
@@ -20,6 +22,7 @@ namespace Document.src.History
             {
                 m_commands[--m_next].Unexecute();
             }
+            // log some information
         }
 
         public void Undo()
@@ -28,6 +31,7 @@ namespace Document.src.History
             {
                 m_commands[++m_next].Execute();
             }
+            // log some information
         }
 
         public void AddAndExecuteCommand(ref ICommand command)
@@ -46,7 +50,9 @@ namespace Document.src.History
             {
                 m_commands.RemoveAt(0);
                 m_next--;
-            }    
+            }
+
+            // log some information
         }
 
         private const int HISTORY_LIMIT = 10;

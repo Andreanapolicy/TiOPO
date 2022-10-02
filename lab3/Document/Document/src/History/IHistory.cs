@@ -2,7 +2,7 @@
 
 namespace Document.src.History
 {
-    interface IHistory
+    public interface IHistory
     {
         bool CanUndo();
         

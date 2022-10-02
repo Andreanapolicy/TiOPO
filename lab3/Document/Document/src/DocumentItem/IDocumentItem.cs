@@ -2,7 +2,7 @@
 
 namespace Document.src.DocumentItem
 {
-    interface IDocumentItem
+    public interface IDocumentItem
     {
         IParagraph GetItem();
     }

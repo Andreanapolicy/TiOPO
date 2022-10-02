@@ -2,7 +2,7 @@
 
 namespace Document.src.Command
 {
-    class CInsertDocumentItemCommand : ICommand
+    public class CInsertDocumentItemCommand : ICommand
     {
         public CInsertDocumentItemCommand(ref List<IDocumentItem> items, ref IDocumentItem newItem, int index)
         {

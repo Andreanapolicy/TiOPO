@@ -2,7 +2,7 @@
 
 namespace Document.src.Command
 {
-    class CRemoveItemCommand : ICommand
+    public class CRemoveItemCommand : ICommand
     {
         public CRemoveItemCommand(ref List<IDocumentItem> items, int index)
         {

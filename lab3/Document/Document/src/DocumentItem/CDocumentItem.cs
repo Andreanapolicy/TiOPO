@@ -2,7 +2,7 @@
 
 namespace Document.src.DocumentItem
 {
-    class CDocumentItem : IDocumentItem
+    public class CDocumentItem : IDocumentItem
     {
         public CDocumentItem(IParagraph item)
         {

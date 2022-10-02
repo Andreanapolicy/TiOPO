@@ -1,6 +1,6 @@
 ﻿namespace Document.src.Command
 {
-    interface ICommand
+    public interface ICommand
     {
         void Execute();
 

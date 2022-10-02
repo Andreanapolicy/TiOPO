@@ -5,7 +5,7 @@ using Document.src.Paragraph;
 
 namespace Document.src.Document
 {
-    class CDocument : IDocument
+    public class CDocument : IDocument
     {
         public CDocument(IHistory history)
         {

@@ -3,7 +3,7 @@ using Document.src.Paragraph;
 
 namespace Document.src.Document
 {
-    interface IDocument
+	public interface IDocument
     {
 		IParagraph InsertParagraph(string text, int position);
 

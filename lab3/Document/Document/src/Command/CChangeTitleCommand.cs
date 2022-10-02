@@ -1,6 +1,6 @@
 ﻿namespace Document.src.Command
 {
-    class CChangeTitleCommand : ICommand
+    public class CChangeTitleCommand : ICommand
     {
         public CChangeTitleCommand(ref string currentTitle, ref string newTitle)
         {

@@ -1,6 +1,6 @@
 ﻿namespace Document.src.Command
 {
-    class CReplaceTextParagraphCommand : ICommand
+    public class CReplaceTextParagraphCommand : ICommand
     {
         public CReplaceTextParagraphCommand(ref string currentText, ref string newText)
         {
