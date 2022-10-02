@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Document", "Document\Document.csproj", "{B79AC792-2F19-4B28-A6DE-EC006808EB76}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentTests", "DocumentTests\DocumentTests.csproj", "{86B517B9-3D6D-471D-A17B-D52FC1AF3B7C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B79AC792-2F19-4B28-A6DE-EC006808EB76} = {B79AC792-2F19-4B28-A6DE-EC006808EB76}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
