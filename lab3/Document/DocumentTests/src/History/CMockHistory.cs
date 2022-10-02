@@ -1,9 +1,10 @@
 ﻿using Document.src.Command;
+using Document.src.History;
 using System.Collections.Generic;
 
 namespace DocumentTests.src.History
 {
-    public class CMockHistory
+    public class CMockHistory : IHistory
     {
         public bool CanRedo()
         {
