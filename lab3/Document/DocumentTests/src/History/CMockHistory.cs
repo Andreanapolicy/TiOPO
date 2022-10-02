@@ -6,12 +6,12 @@ namespace DocumentTests.src.History
 {
     public class CMockHistory : IHistory
     {
-        public bool CanRedo()
+        public bool CanUndo()
         {
             return m_next > 0;
         }
 
-        public bool CanUndo()
+        public bool CanRedo()
         {
             return m_next < m_commands.Count;
         }
