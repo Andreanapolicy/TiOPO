@@ -47,6 +47,15 @@ namespace DocumentTests
         }
 
         [Test]
+        public void Check_Document_Getting_Wrong_Element()
+        {
+            IHistory history = new CMockHistory();
+            CDocument document = new CDocument(history);
+
+            Assert.Catch(() => document.GetItem(1), "Index is out of range");
+        }
+
+        [Test]
         public void Check_Document_Adding_Paragraph_Into_Right_Position()
         {
             IHistory history = new CMockHistory();
