@@ -57,5 +57,17 @@ namespace DocumentTests
             Assert.AreEqual(document.GetItemsCount(), 1);
             checkHistoryState(ref document, true, false);
         }
+
+        [Test]
+        public void Check_Document_Removing_Paragraph()
+        {
+            IHistory history = new CMockHistory();
+            IDocument document = new CDocument(history);
+            document.InsertParagraph("test", 0);
+            document.RemoveItem(0);
+            
+            Assert.AreEqual(document.GetItemsCount(), 0);
+            checkHistoryState(ref document, true, false);
+        }
     }
 }
