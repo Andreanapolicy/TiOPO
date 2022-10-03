@@ -2,6 +2,7 @@
 using Document.src.DocumentItem;
 using Document.src.History;
 using Document.src.Paragraph;
+using System.Text;
 
 namespace Document.src.Document
 {
@@ -24,7 +25,7 @@ namespace Document.src.Document
 
         public string GetTitle()
         {
-            return m_title;
+            return m_title.ToString();
         }
 
         public IParagraph InsertParagraph(string text, int position)
@@ -57,7 +58,8 @@ namespace Document.src.Document
 
         public void SetTitle(string title)
         {
-            ICommand setTitleCommand = new CChangeTitleCommand(ref m_title, ref title);
+            StringBuilder titleSB = new StringBuilder(title);
+            ICommand setTitleCommand = new CChangeTitleCommand(m_title, titleSB);
             m_history.AddAndExecuteCommand(ref setTitleCommand);
         }
 
@@ -82,7 +84,7 @@ namespace Document.src.Document
         }
 
         private IHistory m_history;
-        private string m_title = "";
+        private StringBuilder m_title = new StringBuilder("");
         private List<IDocumentItem> m_items = new List<IDocumentItem>();
     }
 }

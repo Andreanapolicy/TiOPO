@@ -1,8 +1,10 @@
-﻿namespace Document.src.Command
+﻿using System.Text;
+
+namespace Document.src.Command
 {
     public class CChangeTitleCommand : ICommand
     {
-        public CChangeTitleCommand(ref string currentTitle, ref string newTitle)
+        public CChangeTitleCommand(StringBuilder currentTitle, StringBuilder newTitle)
         {
             m_currentTitle = currentTitle;
             m_newTitle = newTitle;
@@ -10,15 +12,24 @@
 
         public void Execute()
         {
-            (m_currentTitle, m_newTitle) = (m_newTitle, m_currentTitle);
+            StringBuilder temp = new StringBuilder(m_currentTitle.ToString());
+            m_currentTitle.Clear();
+            m_currentTitle.Append(m_newTitle.ToString());
+            m_newTitle.Clear();
+            m_newTitle.Append(temp.ToString());
+
         }
 
         public void Unexecute()
         {
-            (m_currentTitle, m_newTitle) = (m_newTitle, m_currentTitle);
+            StringBuilder temp = new StringBuilder(m_currentTitle.ToString());
+            m_currentTitle.Clear();
+            m_currentTitle.Append(m_newTitle.ToString());
+            m_newTitle.Clear();
+            m_newTitle.Append(temp.ToString());
         }
 
-        private string m_currentTitle;
-        private string m_newTitle;
+        private StringBuilder m_currentTitle;
+        private StringBuilder m_newTitle;
     }
 }

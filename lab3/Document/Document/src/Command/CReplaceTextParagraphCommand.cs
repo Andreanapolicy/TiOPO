@@ -1,8 +1,10 @@
-﻿namespace Document.src.Command
+﻿using System.Text;
+
+namespace Document.src.Command
 {
     public class CReplaceTextParagraphCommand : ICommand
     {
-        public CReplaceTextParagraphCommand(ref string currentText, ref string newText)
+        public CReplaceTextParagraphCommand(StringBuilder currentText, StringBuilder newText)
         {
             m_currentText = currentText;
             m_newText = newText;
@@ -10,15 +12,23 @@
 
         public void Execute()
         {
-            (m_currentText, m_newText) = (m_newText, m_currentText);
+            StringBuilder temp = new StringBuilder(m_currentText.ToString());
+            m_currentText.Clear();
+            m_currentText.Append(m_newText.ToString());
+            m_newText.Clear();
+            m_newText.Append(temp.ToString());
         }
 
         public void Unexecute()
         {
-            (m_currentText, m_newText) = (m_newText, m_currentText);
+            StringBuilder temp = new StringBuilder(m_currentText.ToString());
+            m_currentText.Clear();
+            m_currentText.Append(m_newText.ToString());
+            m_newText.Clear();
+            m_newText.Append(temp.ToString());
         }
 
-        private string m_currentText;
-        private string m_newText;
+        private StringBuilder m_currentText;
+        private StringBuilder m_newText;
     }
 }
