@@ -45,6 +45,7 @@ namespace DocumentTests
             IDocument document = new CDocument(history);
 
             Assert.Catch(() => document.InsertParagraph("test", 1), "Index is out of range");
+
             Assert.AreEqual(document.GetItemsCount(), 0);
             checkHistoryState(ref document, false, false);
         }
@@ -56,6 +57,9 @@ namespace DocumentTests
             IDocument document = new CDocument(history);
 
             Assert.Catch(() => document.GetItem(1), "Index is out of range");
+
+            Assert.AreEqual(document.GetItemsCount(), 0);
+            checkHistoryState(ref document, false, false);
         }
 
         [Test]
@@ -64,7 +68,7 @@ namespace DocumentTests
             IHistory history = new CMockHistory();
             IDocument document = new CDocument(history);
 
-            Assert.DoesNotThrow(() => document.InsertParagraph("test", 0));
+            document.InsertParagraph("test", 0);
 
             Assert.AreEqual(document.GetItemsCount(), 1);
             checkHistoryState(ref document, true, false);
@@ -76,6 +80,7 @@ namespace DocumentTests
             IHistory history = new CMockHistory();
             IDocument document = new CDocument(history);
             document.InsertParagraph("test", 0);
+            
             document.RemoveItem(0);
             
             Assert.AreEqual(document.GetItemsCount(), 0);
@@ -90,6 +95,7 @@ namespace DocumentTests
             document.InsertParagraph("1", 0);
             document.InsertParagraph("2", 1);
             document.InsertParagraph("3", 2);
+
             document.RemoveItem(0);
             
             Assert.AreEqual(document.GetItemsCount(), 2);
@@ -106,6 +112,7 @@ namespace DocumentTests
             document.InsertParagraph("1", 0);
             document.InsertParagraph("2", 1);
             document.InsertParagraph("3", 2);
+
             document.RemoveItem(1);
             
             Assert.AreEqual(document.GetItemsCount(), 2);
@@ -122,6 +129,7 @@ namespace DocumentTests
             document.InsertParagraph("1", 0);
             document.InsertParagraph("2", 1);
             document.InsertParagraph("3", 2);
+
             document.RemoveItem(2);
             
             Assert.AreEqual(document.GetItemsCount(), 2);
@@ -189,6 +197,7 @@ namespace DocumentTests
             IDocument document = new CDocument(history);
             document.SetTitle("1");
             document.Undo();
+
             document.Redo();
 
             Assert.AreEqual(document.GetTitle(), "1");
