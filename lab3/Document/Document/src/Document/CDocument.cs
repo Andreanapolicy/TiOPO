@@ -47,7 +47,7 @@ namespace Document.src.Document
 
         public void ReplaceParagraphText(int index, string text)
         {
-            if (index > m_items.Count)
+            if (index >= m_items.Count)
             {
                 throw new ArgumentOutOfRangeException("Index is out of range");
             }
