@@ -132,13 +132,37 @@ namespace DocumentTests
         {
             IHistory history = new CMockHistory();
             IDocument document = new CDocument(history);
-            document.InsertParagraph("1", 0);
-
+            
             Assert.Catch(() => document.RemoveItem(2), "Index is out of range");
 
+            Assert.AreEqual(document.GetItemsCount(), 0);
+            checkHistoryState(ref document, false, false);
+        }
+
+        [Test]
+        public void Check_Document_Replacing_Paragraph_Text_Success()
+        {
+            IHistory history = new CMockHistory();
+            IDocument document = new CDocument(history);
+            document.InsertParagraph("1", 0);
+
+            document.ReplaceParagraphText(0, "2");
+
             Assert.AreEqual(document.GetItemsCount(), 1);
-            Assert.AreEqual(document.GetItem(0).GetItem().GetText(), "1");
+            Assert.AreEqual(document.GetItem(0).GetItem().GetText(), "2");
             checkHistoryState(ref document, true, false);
+        }
+
+        [Test]
+        public void Check_Document_Replacing_Paragraph_Text_Wrong_Position()
+        {
+            IHistory history = new CMockHistory();
+            IDocument document = new CDocument(history);
+
+            Assert.Catch(() => document.ReplaceParagraphText(0, "2"), "Index is out of range");
+
+            Assert.AreEqual(document.GetItemsCount(), 0);
+            checkHistoryState(ref document, false, false);
         }
     }
 }
