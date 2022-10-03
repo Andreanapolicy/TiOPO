@@ -117,5 +117,19 @@ namespace DocumentTests
             Assert.AreEqual(document.GetItem(1).GetItem().GetText(), "2");
             checkHistoryState(ref document, true, false);
         }
+
+        [Test]
+        public void Check_Document_Removing_Wrong_Paragraph()
+        {
+            IHistory history = new CMockHistory();
+            IDocument document = new CDocument(history);
+            document.InsertParagraph("1", 0);
+
+            Assert.Catch(() => document.RemoveItem(2), "Index is out of range");
+
+            Assert.AreEqual(document.GetItemsCount(), 1);
+            Assert.AreEqual(document.GetItem(0).GetItem().GetText(), "1");
+            checkHistoryState(ref document, true, false);
+        }
     }
 }
