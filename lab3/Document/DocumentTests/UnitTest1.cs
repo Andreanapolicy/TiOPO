@@ -59,7 +59,7 @@ namespace DocumentTests
         }
 
         [Test]
-        public void Check_Document_Removing_Paragraph()
+        public void Check_Document_Removing_Alone_Paragraph()
         {
             IHistory history = new CMockHistory();
             IDocument document = new CDocument(history);
@@ -67,6 +67,20 @@ namespace DocumentTests
             document.RemoveItem(0);
             
             Assert.AreEqual(document.GetItemsCount(), 0);
+            checkHistoryState(ref document, true, false);
+        }
+
+        [Test]
+        public void Check_Document_Removing_First_Paragraph()
+        {
+            IHistory history = new CMockHistory();
+            IDocument document = new CDocument(history);
+            document.InsertParagraph("1", 0);
+            document.InsertParagraph("2", 1);
+            document.RemoveItem(0);
+            
+            Assert.AreEqual(document.GetItemsCount(), 1);
+            Assert.AreEqual(document.GetItem(0).GetItem().GetText(), "2");
             checkHistoryState(ref document, true, false);
         }
     }
