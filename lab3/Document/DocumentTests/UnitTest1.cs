@@ -26,6 +26,18 @@ namespace DocumentTests
         }
 
         [Test]
+        public void Check_Document_Setting_Title()
+        {
+            IHistory history = new CMockHistory();
+            IDocument document = new CDocument(history);
+
+            document.SetTitle("Title");
+
+            Assert.AreEqual(document.GetTitle(), "Title");
+            checkHistoryState(ref document, true, false);
+        }
+
+        [Test]
         public void Check_Document_Adding_Paragraph_Into_Wrong_Position()
         {
             IHistory history = new CMockHistory();
