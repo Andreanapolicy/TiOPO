@@ -77,10 +77,28 @@ namespace DocumentTests
             IDocument document = new CDocument(history);
             document.InsertParagraph("1", 0);
             document.InsertParagraph("2", 1);
+            document.InsertParagraph("3", 2);
             document.RemoveItem(0);
             
-            Assert.AreEqual(document.GetItemsCount(), 1);
+            Assert.AreEqual(document.GetItemsCount(), 2);
             Assert.AreEqual(document.GetItem(0).GetItem().GetText(), "2");
+            Assert.AreEqual(document.GetItem(1).GetItem().GetText(), "3");
+            checkHistoryState(ref document, true, false);
+        }
+
+        [Test]
+        public void Check_Document_Removing_Second_Paragraph()
+        {
+            IHistory history = new CMockHistory();
+            IDocument document = new CDocument(history);
+            document.InsertParagraph("1", 0);
+            document.InsertParagraph("2", 1);
+            document.InsertParagraph("3", 2);
+            document.RemoveItem(1);
+            
+            Assert.AreEqual(document.GetItemsCount(), 2);
+            Assert.AreEqual(document.GetItem(0).GetItem().GetText(), "1");
+            Assert.AreEqual(document.GetItem(1).GetItem().GetText(), "3");
             checkHistoryState(ref document, true, false);
         }
     }
