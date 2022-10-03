@@ -20,8 +20,8 @@ namespace DocumentTests.src.History
         {
             if (CanRedo())
             {
-                m_next++;
                 m_commands[m_next].Unexecute();
+                m_next++;
             }
         }
 
