@@ -17,6 +17,7 @@ namespace DocumentTests
         public void Check_Document_Constructing()
         {
             IHistory history = new CMockHistory();
+
             IDocument document = new CDocument(history);
 
             Assert.IsNotNull(document);
@@ -41,16 +42,18 @@ namespace DocumentTests
         public void Check_Document_Adding_Paragraph_Into_Wrong_Position()
         {
             IHistory history = new CMockHistory();
-            CDocument document = new CDocument(history);
+            IDocument document = new CDocument(history);
 
             Assert.Catch(() => document.InsertParagraph("test", 1), "Index is out of range");
+            Assert.AreEqual(document.GetItemsCount(), 0);
+            checkHistoryState(ref document, false, false);
         }
 
         [Test]
         public void Check_Document_Getting_Wrong_Element()
         {
             IHistory history = new CMockHistory();
-            CDocument document = new CDocument(history);
+            IDocument document = new CDocument(history);
 
             Assert.Catch(() => document.GetItem(1), "Index is out of range");
         }
