@@ -164,5 +164,19 @@ namespace DocumentTests
             Assert.AreEqual(document.GetItemsCount(), 0);
             checkHistoryState(ref document, false, false);
         }
+
+        [Test]
+        public void Check_Document_Undo_Setting_Title()
+        {
+            IHistory history = new CMockHistory();
+            IDocument document = new CDocument(history);
+            document.SetTitle("1");
+            document.SetTitle("2");
+
+            document.Undo();
+
+            Assert.AreEqual(document.GetTitle(), "1");
+            checkHistoryState(ref document, true, true);
+        }
     }
 }

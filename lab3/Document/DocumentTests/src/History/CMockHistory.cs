@@ -20,7 +20,8 @@ namespace DocumentTests.src.History
         {
             if (CanRedo())
             {
-                m_commands[--m_next].Unexecute();
+                m_next++;
+                m_commands[m_next].Unexecute();
             }
         }
 
@@ -28,7 +29,8 @@ namespace DocumentTests.src.History
         {
             if (CanUndo())
             {
-                m_commands[++m_next].Execute();
+                m_next--;
+                m_commands[m_next].Execute();
             }
         }
 
