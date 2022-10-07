@@ -189,6 +189,19 @@ namespace DocumentTests
         }
 
         [Test]
+        public void Check_Document_Replacing_Paragraph_On_Empty_Value()
+        {
+            IDocument document = new CDocument(m_history);
+            document.InsertParagraph("1", 0);
+
+            document.ReplaceParagraphText(0, "");
+
+            Assert.AreEqual(document.GetItemsCount(), 1);
+            Assert.AreEqual(document.GetItem(0).GetItem().GetText(), "");
+            checkHistoryState(ref document, true, false);
+        }
+
+        [Test]
         public void Check_Document_Replacing_Paragraph_Text_Wrong_Position()
         {
             IDocument document = new CDocument(m_history);
