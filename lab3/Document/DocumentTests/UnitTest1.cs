@@ -33,13 +33,24 @@ namespace DocumentTests
         }
 
         [Test]
-        public void Check_Document_Setting_Title()
+        public void Check_Document_Setting_Title_With_Value()
         {
             IDocument document = new CDocument(m_history);
 
             document.SetTitle("Title");
 
             Assert.AreEqual(document.GetTitle(), "Title");
+            checkHistoryState(ref document, true, false);
+        }
+
+        [Test]
+        public void Check_Document_Setting_Title_With_Empty_Value()
+        {
+            IDocument document = new CDocument(m_history);
+
+            document.SetTitle("");
+
+            Assert.AreEqual(document.GetTitle(), "");
             checkHistoryState(ref document, true, false);
         }
 
