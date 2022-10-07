@@ -7,7 +7,7 @@ namespace DocumentTests
 {
     public class DocumentTests
     {
-        public void checkHistoryState(ref IDocument document, bool isAvailableUndo, bool isAvailableRedo)
+        private void checkHistoryState(ref IDocument document, bool isAvailableUndo, bool isAvailableRedo)
         {
             Assert.AreEqual(document.CanRedo(), isAvailableRedo);
             Assert.AreEqual(document.CanUndo(), isAvailableUndo);
