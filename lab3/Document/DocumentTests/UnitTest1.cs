@@ -213,6 +213,23 @@ namespace DocumentTests
         }
 
         [Test]
+        public void Check_Document_Replacing_First_Paragraph_With_2_Additional_Paragraph()
+        {
+            IDocument document = new CDocument(m_history);
+            document.InsertParagraph("0", 0);
+            document.InsertParagraph("1", 1);
+            document.InsertParagraph("2", 2);
+
+            document.ReplaceParagraphText(0, "test");
+
+            Assert.AreEqual(document.GetItemsCount(), 3);
+            Assert.AreEqual(document.GetItem(0).GetItem().GetText(), "test");
+            Assert.AreEqual(document.GetItem(1).GetItem().GetText(), "1");
+            Assert.AreEqual(document.GetItem(2).GetItem().GetText(), "2");
+            checkHistoryState(ref document, true, false);
+        }
+
+        [Test]
         public void Check_Document_Undo_Setting_Title()
         {
             IDocument document = new CDocument(m_history);
