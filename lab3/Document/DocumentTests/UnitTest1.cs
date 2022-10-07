@@ -66,6 +66,34 @@ namespace DocumentTests
         }
 
         [Test]
+        public void Check_Document_Adding_Paragraph_Into_Right_Position()
+        {
+            IDocument document = new CDocument(m_history);
+
+            document.InsertParagraph("test", 0);
+
+            Assert.AreEqual(document.GetItemsCount(), 1);
+            Assert.AreEqual(document.GetItem(0).GetItem().GetText(), "test");
+            checkHistoryState(ref document, true, false);
+        }
+
+        [Test]
+        public void Check_Document_Adding_Paragraphs()
+        {
+            IDocument document = new CDocument(m_history);
+
+            document.InsertParagraph("test", 0);
+            document.InsertParagraph("test1", 1);
+            document.InsertParagraph("test2", 2);
+
+            Assert.AreEqual(document.GetItemsCount(), 3);
+            Assert.AreEqual(document.GetItem(0).GetItem().GetText(), "test");
+            Assert.AreEqual(document.GetItem(1).GetItem().GetText(), "test1");
+            Assert.AreEqual(document.GetItem(2).GetItem().GetText(), "test2");
+            checkHistoryState(ref document, true, false);
+        }
+
+        [Test]
         public void Check_Document_Getting_Wrong_Element()
         {
             IDocument document = new CDocument(m_history);
@@ -74,17 +102,6 @@ namespace DocumentTests
 
             Assert.AreEqual(document.GetItemsCount(), 0);
             checkHistoryState(ref document, false, false);
-        }
-
-        [Test]
-        public void Check_Document_Adding_Paragraph_Into_Right_Position()
-        {
-            IDocument document = new CDocument(m_history);
-
-            document.InsertParagraph("test", 0);
-
-            Assert.AreEqual(document.GetItemsCount(), 1);
-            checkHistoryState(ref document, true, false);
         }
 
         [Test]
