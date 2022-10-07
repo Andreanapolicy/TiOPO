@@ -264,7 +264,19 @@ namespace DocumentTests
         }
 
         [Test]
-        public void Check_Document_Undo_Setting_Title()
+        public void Check_Document_Undo_With_One_Command()
+        {
+            IDocument document = new CDocument(m_history);
+            document.SetTitle("1");
+
+            document.Undo();
+
+            Assert.AreEqual(document.GetTitle(), "");
+            checkHistoryState(ref document, false, true);
+        }
+
+        [Test]
+        public void Check_Document_Undo_With_Many_Command()
         {
             IDocument document = new CDocument(m_history);
             document.SetTitle("1");
@@ -277,7 +289,7 @@ namespace DocumentTests
         }
 
         [Test]
-        public void Check_Document_Redo_Setting_Title()
+        public void Check_Document_Redo_With_One_Command()
         {
             IDocument document = new CDocument(m_history);
             document.SetTitle("1");
@@ -286,6 +298,20 @@ namespace DocumentTests
             document.Redo();
 
             Assert.AreEqual(document.GetTitle(), "1");
+            checkHistoryState(ref document, true, false);
+        }
+
+        [Test]
+        public void Check_Document_Redo_With_Many_Command()
+        {
+            IDocument document = new CDocument(m_history);
+            document.SetTitle("1");
+            document.SetTitle("2");
+            document.Undo();
+
+            document.Redo();
+
+            Assert.AreEqual(document.GetTitle(), "2");
             checkHistoryState(ref document, true, false);
         }
     }
