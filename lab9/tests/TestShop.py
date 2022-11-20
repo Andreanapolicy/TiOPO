@@ -49,6 +49,17 @@ class TestShop(unittest.TestCase):
         assert createdProduct is not None
         assert createdProduct['id'] == str(self.createdProducts[0]['id'])
 
+    def test_CreateProduct_ProductCreated_Fail(self):
+        response = self.productController.create(self.data['invalid_product'])
+        self.createdProducts.append(response)
+        assert Validator.validate(response, self.defaultResponseScheme) == True
+
+        response = self.productController.getAll()
+        createdProduct = GetItemById(response, self.createdProducts[0]['id'])
+
+        assert createdProduct is not None
+        assert createdProduct['id'] == str(self.createdProducts[0]['id'])
+
     def test_DeleteProductById(self):
         product = self.productController.create(self.data['valid_product'])
         self.createdProducts.append(product)
