@@ -4,7 +4,7 @@ from lab9.common.URL import *
 
 class ProductController:
     def deleteById(self, id):
-        response = Client.custom_request('GET', BASE_URL + API_PREFIX + DELETE_PRODUCT_REQUEST, json=id)
+        response = Client.custom_request('GET', BASE_URL + API_PREFIX + DELETE_PRODUCT_REQUEST, params={'id': id})
         return response.json()
 
     def create(self, params):
@@ -12,7 +12,7 @@ class ProductController:
         return response.json()
 
     def edit(self, params):
-        response = Client.custom_request('POST', BASE_URL + API_PREFIX + EDIT_PRODUCT_REQUEST, params)
+        response = Client.custom_request('POST', BASE_URL + API_PREFIX + EDIT_PRODUCT_REQUEST, json=params)
         return response.json()
 
     def getAll(self):

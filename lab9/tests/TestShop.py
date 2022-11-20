@@ -20,21 +20,25 @@ class TestShop(unittest.TestCase):
     def tearDown(self):
         if len(self.createdProducts) > 0:
             for createdProduct in self.createdProducts:
-                self.productController.deleteById(createdProduct)
+                self.productController.deleteById(createdProduct['id'])
         self.productController = None
 
-    def test_GetAllProducts_Success(self):
+    def test_GetAllProducts_ProductListHaveToBeNotEmpty_Success(self):
         response = self.productController.getAll()
-        print(response[0])
 
         assert Validator.validate(response, self.productListResponseScheme)
         assert len(response) > 0
 
-    def test_CreateProduct_Success(self):
+    def test_CreateProduct_ProductCreated_Success(self):
         response = self.productController.create(self.data['valid_product'])
         self.createdProducts.append(response)
-
         assert Validator.validate(response, self.defaultResponseScheme)
+
+        print(self.createdProducts[0]['id'])
+        response = self.productController.getAll()
+        print(response)
+        createdProduct = [item for item in response if item['id'] == self.createdProducts[0]['id']]
+        print(createdProduct)
 
         assert len(self.createdProducts) == 1
 
