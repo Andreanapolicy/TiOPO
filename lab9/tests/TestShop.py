@@ -9,12 +9,21 @@ def loadJSON(url):
     return json.load(f)
 
 
+def GetItemById(items, id):
+    createdProduct = None
+    for item in items:
+        if item['id'] == str(id):
+            createdProduct = item
+
+    return createdProduct
+
+
 class TestShop(unittest.TestCase):
     def setUp(self):
         self.productController = ProductController()
         self.createdProducts = []
         self.data = loadJSON('data/test_data.json')
-        self.defaultResponseScheme = loadJSON('schemes/default_response_scheme.json')
+        self.defaultResponseScheme = loadJSON('schemes/create_product_response_scheme.json')
         self.productListResponseScheme = loadJSON('schemes/product_list.json')
 
     def tearDown(self):
@@ -34,13 +43,11 @@ class TestShop(unittest.TestCase):
         self.createdProducts.append(response)
         assert Validator.validate(response, self.defaultResponseScheme)
 
-        print(self.createdProducts[0]['id'])
         response = self.productController.getAll()
-        print(response)
-        createdProduct = [item for item in response if item['id'] == self.createdProducts[0]['id']]
-        print(createdProduct)
+        createdProduct = GetItemById(response, self.createdProducts[0]['id'])
 
-        assert len(self.createdProducts) == 1
+        assert createdProduct is not None
+        assert createdProduct['id'] == str(self.createdProducts[0]['id'])
 
     def test_DeleteProductById(self):
         assert len(self.createdProducts) == 0
