@@ -1,0 +1,14 @@
+{
+    "type": "object",
+    "required": ["status"],
+    "properties": {
+        "status": {
+            "type": "number",
+            "enum": [0, 1]
+        },
+        "id": {
+            "format": "id",
+            "type": "number"
+        }
+    }
+}
