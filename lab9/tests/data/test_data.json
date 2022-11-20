@@ -10,6 +10,17 @@
         "description": "Do u know, what u get for 300 bucks",
         "hit": "1"
     },
+    "another_one_valid_product": {
+        "category_id": "2",
+        "title": "main",
+        "content": "main",
+        "price": "301",
+        "old_price": "300",
+        "status": "1",
+        "keywords": "fist_v2",
+        "description": "Sorry, bro, inflation",
+        "hit": "1"
+    },
     "invalid_product": {
         "category_id": 99,
         "title": "Title",

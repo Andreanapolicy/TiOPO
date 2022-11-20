@@ -23,7 +23,7 @@ class TestShop(unittest.TestCase):
         self.productController = ProductController()
         self.createdProducts = []
         self.data = loadJSON('data/test_data.json')
-        self.defaultResponseScheme = loadJSON('schemes/create_product_response_scheme.json')
+        self.defaultResponseScheme = loadJSON('schemes/common_response_scheme.json')
         self.productListResponseScheme = loadJSON('schemes/product_list.json')
 
     def tearDown(self):
@@ -67,10 +67,33 @@ class TestShop(unittest.TestCase):
     def test_CreateProduct_ProductCreated_Fail(self):
         response = self.productController.create(self.data['invalid_product'])
         self.createdProducts.append(response)
-        assert Validator.validate(response, self.defaultResponseScheme) == True
+        assert Validator.validate(response, self.defaultResponseScheme)
 
         response = self.productController.getAll()
         createdProduct = GetItemById(response, self.createdProducts[0]['id'])
 
         assert createdProduct is not None
         assert createdProduct['id'] == str(self.createdProducts[0]['id'])
+
+    def test_EditProduct_ProductEdited_Success(self):
+        response = self.productController.create(self.data['valid_product'])
+        self.createdProducts.append(response)
+        assert Validator.validate(response, self.defaultResponseScheme)
+
+        response = self.productController.getAll()
+        createdProduct = GetItemById(response, self.createdProducts[0]['id'])
+
+        newProduct = createdProduct
+        newProduct.update(self.data['another_one_valid_product'])
+
+        response = self.productController.edit(newProduct)
+        assert Validator.validate(response, self.defaultResponseScheme)
+
+        createdProduct = GetItemById(self.productController.getAll(), self.createdProducts[0]['id'])
+
+        createdProduct.pop('cat', None)
+        createdProduct.pop('alias', None)
+        newProduct.pop('cat', None)
+        newProduct.pop('alias', None)
+        assert response['status'] == 1
+        assert newProduct == createdProduct
