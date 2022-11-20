@@ -1,6 +1,7 @@
 import jsonschema.exceptions
 from jsonschema import validate
 
+
 class Validator:
     def validate(data, scheme):
         try:
