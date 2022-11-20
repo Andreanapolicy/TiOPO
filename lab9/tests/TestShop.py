@@ -97,3 +97,19 @@ class TestShop(unittest.TestCase):
         newProduct.pop('alias', None)
         assert response['status'] == 1
         assert newProduct == createdProduct
+
+    def test_EditProduct_EditByInvalidProduct_Fail(self):
+        response = self.productController.create(self.data['valid_product'])
+        self.createdProducts.append(response)
+        assert Validator.validate(response, self.defaultResponseScheme)
+
+        response = self.productController.getAll()
+        createdProduct = GetItemById(response, self.createdProducts[0]['id'])
+
+        newProduct = createdProduct
+        newProduct.update(self.data['invalid_product'])
+
+        try:
+            self.productController.edit(newProduct)
+        except Exception as exception:
+            self.skipTest('Caught this error: ' + repr(exception))
