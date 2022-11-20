@@ -1,22 +1,28 @@
-import pytest
+import unittest
 
 from lab9.controller.ProductController import ProductController
 
 
-class TestShop:
-    def __init__(self):
+class TestShop(unittest.TestCase):
+    # def __init__(self):
+    #     self.productController = ProductController()
+    #     self.createdProducts = []
+
+    # @pytest.fixture(autouse=True)
+    # def beforeAndAfter(self):
+    #     print('just beforeAndAfter')
+    #     if len(self.createdProducts) > 0:
+    #         for createdProduct in self.createdProducts:
+    #             self.productController.deleteById(createdProduct)
+
+    def setUp(self):
         self.productController = ProductController()
         self.createdProducts = []
 
-    @pytest.fixture(autouse=True)
-    def beforeAndAfter(self):
-        if len(self.createdProducts) > 0:
-            for createdProduct in self.createdProducts:
-                self.productController.deleteById(createdProduct)
+    def test_CreateProduct(self):
+        assert len(self.createdProducts) == 0
 
-    def testCreateProduct(self):
+    def test_deleteProductById(self):
         assert 1 == 1
-
-    def deleteProductById(self):
         #create priduct
         #delete product
