@@ -50,4 +50,11 @@ class TestShop(unittest.TestCase):
         assert createdProduct['id'] == str(self.createdProducts[0]['id'])
 
     def test_DeleteProductById(self):
-        assert len(self.createdProducts) == 0
+        product = self.productController.create(self.data['valid_product'])
+        self.createdProducts.append(product)
+
+        self.productController.deleteById(product['id'])
+        response = self.productController.getAll()
+        createdProduct = GetItemById(response, product['id'])
+
+        assert createdProduct is None
