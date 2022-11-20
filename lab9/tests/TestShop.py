@@ -38,6 +38,21 @@ class TestShop(unittest.TestCase):
         assert Validator.validate(response, self.productListResponseScheme)
         assert len(response) > 0
 
+    def test_DeleteProduct_Success(self):
+        product = self.productController.create(self.data['valid_product'])
+        self.createdProducts.append(product)
+
+        self.productController.deleteById(product['id'])
+        response = self.productController.getAll()
+        createdProduct = GetItemById(response, product['id'])
+
+        assert createdProduct is None
+
+    def test_DeleteProduct_Fail(self):
+        response = self.productController.deleteById(0)
+
+        assert response['status'] == 1
+
     def test_CreateProduct_ProductCreated_Success(self):
         response = self.productController.create(self.data['valid_product'])
         self.createdProducts.append(response)
@@ -59,13 +74,3 @@ class TestShop(unittest.TestCase):
 
         assert createdProduct is not None
         assert createdProduct['id'] == str(self.createdProducts[0]['id'])
-
-    def test_DeleteProductById(self):
-        product = self.productController.create(self.data['valid_product'])
-        self.createdProducts.append(product)
-
-        self.productController.deleteById(product['id'])
-        response = self.productController.getAll()
-        createdProduct = GetItemById(response, product['id'])
-
-        assert createdProduct is None
