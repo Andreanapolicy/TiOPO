@@ -51,6 +51,7 @@ class TestShop(unittest.TestCase):
     def test_DeleteProduct_Fail(self):
         response = self.productController.deleteById(0)
 
+        print("\nWrong id to delete product\n")
         assert response['status'] == 1
 
     def test_CreateProduct_ProductCreated_Success(self):
@@ -72,6 +73,7 @@ class TestShop(unittest.TestCase):
         response = self.productController.getAll()
         createdProduct = GetItemById(response, self.createdProducts[0]['id'])
 
+        print("\nWrong product data to create product entity\n")
         assert createdProduct is not None
         assert createdProduct['id'] == str(self.createdProducts[0]['id'])
 
@@ -112,4 +114,5 @@ class TestShop(unittest.TestCase):
         try:
             self.productController.edit(newProduct)
         except Exception as exception:
-            self.skipTest('Caught this error: ' + repr(exception))
+            print("\nWrong product data to edit product entity\n")
+            self.fail('Caught this error: ' + repr(exception))
