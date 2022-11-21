@@ -32,16 +32,5 @@
         "description": "Do u know, what u get for 300 bucks",
         "hit": "1"
     },
-    "empty_product": {
-        "category_id": 99,
-        "title": "Title",
-        "content": "content",
-        "price": "300",
-        "old_price": "299.9",
-        "status": "1",
-        "keywords": "fist",
-        "description": "Do u know, what u get for 300 bucks",
-        "hit": "1"
-    },
     "null_product": {}
 }

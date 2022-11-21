@@ -116,3 +116,22 @@ class TestShop(unittest.TestCase):
         except Exception as exception:
             print("\nWrong product data to edit product entity\n")
             self.fail('Caught this error: ' + repr(exception))
+
+    def test_EditProduct_EditByEmptyProductData_Success(self):
+        response = self.productController.create(self.data['valid_product'])
+        self.createdProducts.append(response)
+        assert Validator.validate(response, self.defaultResponseScheme)
+
+        response = self.productController.getAll()
+        createdProduct = GetItemById(response, self.createdProducts[0]['id'])
+
+        newProduct = createdProduct
+        newProduct.update(self.data['null_product'])
+
+        response = self.productController.edit(newProduct)
+        updatedProduct = GetItemById(self.productController.getAll(), self.createdProducts[0]['id'])
+
+        createdProduct.pop('alias', None)
+        updatedProduct.pop('alias', None)
+        assert response['status'] == 1
+        assert updatedProduct == createdProduct
