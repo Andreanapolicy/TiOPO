@@ -66,7 +66,8 @@ class TestShop(unittest.TestCase):
         assert createdProduct is not None
         assert createdProduct['id'] == str(self.createdProducts[0]['id'])
 
-    def test_CreateProduct_ProductCreated_Fail(self):
+    def test_CreateProduct_ProductNotCreated_Fail(self):
+        print("\nWrong product data to create product entity\n")
         response = self.productController.create(self.data['invalid_product'])
         self.createdProducts.append(response)
         assert Validator.validate(response, self.defaultResponseScheme)
@@ -74,7 +75,6 @@ class TestShop(unittest.TestCase):
         response = self.productController.getAll()
         createdProduct = GetItemById(response, self.createdProducts[0]['id'])
 
-        print("\nWrong product data to create product entity\n")
         assert createdProduct is not None
         assert createdProduct['id'] == str(self.createdProducts[0]['id'])
 
@@ -148,3 +148,26 @@ class TestShop(unittest.TestCase):
 
         assert firstProduct['alias'] == slugify(self.data['valid_product']['title'])
         assert secondProduct['alias'] == slugify(self.data['valid_product']['title']) + '-0'
+
+    def test_EditAliasByEditingProductTitle_NewProduct_Success(self):
+        self.createdProducts.append(self.productController.create(self.data['valid_product']))
+        self.createdProducts.append(self.productController.create(self.data['valid_product']))
+
+        response = self.productController.getAll()
+
+        firstProduct = GetItemById(response, self.createdProducts[0]['id'])
+        secondProduct = GetItemById(response, self.createdProducts[1]['id'])
+
+        firstProduct.update(self.data['another_one_valid_product'])
+        secondProduct.update(self.data['another_one_valid_product'])
+
+        self.productController.edit(firstProduct)
+        self.productController.edit(secondProduct)
+
+        response = self.productController.getAll()
+
+        firstProduct = GetItemById(response, self.createdProducts[0]['id'])
+        secondProduct = GetItemById(response, self.createdProducts[1]['id'])
+
+        assert firstProduct['alias'] == slugify(self.data['another_one_valid_product']['title'])
+        assert secondProduct['alias'] == slugify(self.data['another_one_valid_product']['title']) + '-' + secondProduct['id']

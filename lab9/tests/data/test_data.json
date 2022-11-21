@@ -12,7 +12,7 @@
     },
     "another_one_valid_product": {
         "category_id": "2",
-        "title": "main",
+        "title": "title not in title",
         "content": "main",
         "price": "301",
         "old_price": "300",
