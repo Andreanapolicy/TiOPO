@@ -2,7 +2,8 @@ import unittest
 import json
 from lab9.controller.ProductController import ProductController
 from lab9.validator.Validator import Validator
-
+from slugify import slugify
+import unidecode
 
 def loadJSON(url):
     f = open(url)
@@ -135,3 +136,15 @@ class TestShop(unittest.TestCase):
         updatedProduct.pop('alias', None)
         assert response['status'] == 1
         assert updatedProduct == createdProduct
+
+    def test_GenerateAlias_NewProduct_Success(self):
+        self.createdProducts.append(self.productController.create(self.data['valid_product']))
+        self.createdProducts.append(self.productController.create(self.data['valid_product']))
+
+        response = self.productController.getAll()
+
+        firstProduct = GetItemById(response, self.createdProducts[0]['id'])
+        secondProduct = GetItemById(response, self.createdProducts[1]['id'])
+
+        assert firstProduct['alias'] == slugify(self.data['valid_product']['title'])
+        assert secondProduct['alias'] == slugify(self.data['valid_product']['title']) + '-0'
