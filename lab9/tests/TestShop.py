@@ -78,7 +78,7 @@ class TestShop(unittest.TestCase):
         assert createdProduct is not None
         assert createdProduct['id'] == str(self.createdProducts[0]['id'])
 
-    def test_EditProduct_ProductEdited_Success(self):
+    def test_EditProduct_ProductEditedBySameProduct_Success(self):
         response = self.productController.create(self.data['valid_product'])
         self.createdProducts.append(response)
         assert Validator.validate(response, self.defaultResponseScheme)
@@ -87,19 +87,19 @@ class TestShop(unittest.TestCase):
         createdProduct = GetItemById(response, self.createdProducts[0]['id'])
 
         newProduct = createdProduct
-        newProduct.update(self.data['another_one_valid_product'])
+        newProduct.update(self.data['valid_product'])
 
         response = self.productController.edit(newProduct)
         assert Validator.validate(response, self.defaultResponseScheme)
 
         createdProduct = GetItemById(self.productController.getAll(), self.createdProducts[0]['id'])
 
-        createdProduct.pop('cat', None)
-        createdProduct.pop('alias', None)
-        newProduct.pop('cat', None)
-        newProduct.pop('alias', None)
+        createdAlias = createdProduct.pop('alias', None)
+        newAlias = newProduct.pop('alias', None)
+
         assert response['status'] == 1
         assert newProduct == createdProduct
+        assert createdAlias == newAlias + '-' + str(self.createdProducts[0]['id'])
 
     def test_EditProduct_EditByInvalidProduct_Fail(self):
         response = self.productController.create(self.data['valid_product'])
@@ -110,7 +110,7 @@ class TestShop(unittest.TestCase):
         createdProduct = GetItemById(response, self.createdProducts[0]['id'])
 
         newProduct = createdProduct
-        newProduct.update(self.data['invalid_product'])
+        newProduct.update(self.data['valid_product_with_category'])
 
         try:
             self.productController.edit(newProduct)

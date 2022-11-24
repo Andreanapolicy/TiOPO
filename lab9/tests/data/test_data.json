@@ -21,13 +21,90 @@
         "description": "Sorry, bro, inflation",
         "hit": "1"
     },
-    "invalid_product": {
-        "category_id": 99,
+    "valid_product_with_category": {
+        "category_id": 15,
         "title": "Title",
         "content": "content",
         "price": "here",
         "old_price": "299.9",
         "status": "1",
+        "keywords": "fist",
+        "description": "Do u know, what u get for 300 bucks",
+        "hit": "1"
+    },
+    "invalid_product_with_category": {
+        "category_id": 16,
+        "title": "Title",
+        "content": "content",
+        "price": "here",
+        "old_price": "299.9",
+        "status": "1",
+        "keywords": "fist",
+        "description": "Do u know, what u get for 300 bucks",
+        "hit": "1"
+    },
+    "valid_product_with_hit_0": {
+        "category_id": 15,
+        "title": "Title",
+        "content": "content",
+        "price": "here",
+        "old_price": "299.9",
+        "status": "1",
+        "keywords": "fist",
+        "description": "Do u know, what u get for 300 bucks",
+        "hit": "0"
+    },
+    "valid_product_with_hit_1": {
+        "category_id": 15,
+        "title": "Title",
+        "content": "content",
+        "price": "here",
+        "old_price": "299.9",
+        "status": "1",
+        "keywords": "fist",
+        "description": "Do u know, what u get for 300 bucks",
+        "hit": "1"
+    },
+    "invalid_product_with_hit_2": {
+        "category_id": 15,
+        "title": "Title",
+        "content": "content",
+        "price": "here",
+        "old_price": "299.9",
+        "status": "1",
+        "keywords": "fist",
+        "description": "Do u know, what u get for 300 bucks",
+        "hit": "2"
+    },
+    "valid_product_with_status_0": {
+        "category_id": 15,
+        "title": "Title",
+        "content": "content",
+        "price": "here",
+        "old_price": "299.9",
+        "status": "0",
+        "keywords": "fist",
+        "description": "Do u know, what u get for 300 bucks",
+        "hit": "1"
+    },
+    "valid_product_with_status_1": {
+        "category_id": 15,
+        "title": "Title",
+        "content": "content",
+        "price": "here",
+        "old_price": "299.9",
+        "status": "1",
+        "keywords": "fist",
+        "description": "Do u know, what u get for 300 bucks",
+        "hit": "1"
+    },
+    "invalid_product_with_status_2": {
+        "category_id": 15,
+        "title": "Title",
+        "content": "content",
+        "price": "here",
+        "old_price": "299.9",
+        "status": "2",
         "keywords": "fist",
         "description": "Do u know, what u get for 300 bucks",
         "hit": "1"
