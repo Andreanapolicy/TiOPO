@@ -158,7 +158,7 @@ class TestShop(unittest.TestCase):
         assert newProduct == createdProduct
         assert createdAlias == newAlias + '-' + str(self.createdProducts[0]['id'])
 
-    def test_EditProduct_EditByInvalidProduct_Fail(self):
+    def test_EditProduct_EditByInvalidProductWithInvalidCategory_ProductDoesNotChanged_Success(self):
         response = self.productController.create(self.data['valid_product'])
         self.createdProducts.append(response)
         assert Validator.validate(response, self.defaultResponseScheme)
@@ -167,10 +167,14 @@ class TestShop(unittest.TestCase):
         createdProduct = GetItemById(response, self.createdProducts[0]['id'])
 
         newProduct = createdProduct
-        newProduct.update(self.data['valid_product_with_category'])
-
+        newProduct.update(self.data['invalid_product_with_category_15'])
         try:
-            self.productController.edit(newProduct)
+            self.productController.edit(self.data['invalid_product_with_category_15'])
+
+            response = self.productController.getAll()
+            createdProduct = GetItemById(response, self.createdProducts[0]['id'])
+
+            assert createdProduct['category_id'] != newProduct['category_id']
         except Exception as exception:
             print("\nWrong product data to edit product entity\n")
             self.fail('Caught this error: ' + repr(exception))
