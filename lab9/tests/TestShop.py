@@ -228,3 +228,20 @@ class TestShop(unittest.TestCase):
 
         assert firstProduct['alias'] == slugify(self.data['another_one_valid_product']['title'])
         assert secondProduct['alias'] == slugify(self.data['another_one_valid_product']['title']) + '-' + secondProduct['id']
+
+    def test_EditAliasBySameTitle_SameProduct_Success(self):
+        self.createdProducts.append(self.productController.create(self.data['valid_product']))
+
+        response = self.productController.getAll()
+
+        firstProduct = GetItemById(response, self.createdProducts[0]['id'])
+
+        firstProduct.update(self.data['valid_product'])
+
+        self.productController.edit(firstProduct)
+
+        response = self.productController.getAll()
+
+        firstProduct = GetItemById(response, self.createdProducts[0]['id'])
+
+        assert firstProduct['alias'] == slugify(self.data['valid_product']['title']) + '-' + str(self.createdProducts[0]['id'])
