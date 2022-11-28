@@ -179,6 +179,27 @@ class TestShop(unittest.TestCase):
             print("\nWrong product data to edit product entity\n")
             self.fail('Caught this error: ' + repr(exception))
 
+    def test_EditProduct_EditByInvalidProductWithInvalidHit_ProductDoesNotChanged_Success(self):
+        response = self.productController.create(self.data['valid_product'])
+        self.createdProducts.append(response)
+        assert Validator.validate(response, self.defaultResponseScheme)
+
+        response = self.productController.getAll()
+        createdProduct = GetItemById(response, self.createdProducts[0]['id'])
+
+        newProduct = createdProduct
+        newProduct.update(self.data['invalid_product_with_hit_2'])
+        try:
+            self.productController.edit(self.data['invalid_product_with_hit_2'])
+
+            response = self.productController.getAll()
+            createdProduct = GetItemById(response, self.createdProducts[0]['id'])
+
+            assert createdProduct['hit'] != newProduct['hit']
+        except Exception as exception:
+            print("\nWrong product data to edit product entity\n")
+            self.fail('Caught this error: ' + repr(exception))
+
     def test_EditProduct_EditByEmptyProductData_Success(self):
         response = self.productController.create(self.data['valid_product'])
         self.createdProducts.append(response)
