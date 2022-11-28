@@ -21,22 +21,22 @@
         "description": "Sorry, bro, inflation",
         "hit": "1"
     },
-    "valid_product_with_category": {
-        "category_id": 15,
-        "title": "Title",
+    "valid_product_with_category_14": {
+        "category_id": 14,
+        "title": "title in title",
         "content": "content",
-        "price": "here",
+        "price": "300",
         "old_price": "299.9",
         "status": "1",
         "keywords": "fist",
         "description": "Do u know, what u get for 300 bucks",
         "hit": "1"
     },
-    "invalid_product_with_category": {
-        "category_id": 16,
+    "invalid_product_with_category_15": {
+        "category_id": 15,
         "title": "Title",
         "content": "content",
-        "price": "here",
+        "price": "300",
         "old_price": "299.9",
         "status": "1",
         "keywords": "fist",

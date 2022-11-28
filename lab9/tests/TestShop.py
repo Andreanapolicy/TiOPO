@@ -66,9 +66,20 @@ class TestShop(unittest.TestCase):
         assert createdProduct is not None
         assert createdProduct['id'] == str(self.createdProducts[0]['id'])
 
-    def test_CreateProduct_ProductNotCreated_Fail(self):
+    def test_CreateProduct_ProductCreatedWithCategoryId14_Success(self):
+        response = self.productController.create(self.data['valid_product_with_category_14'])
+        self.createdProducts.append(response)
+        assert Validator.validate(response, self.defaultResponseScheme)
+
+        response = self.productController.getAll()
+        createdProduct = GetItemById(response, self.createdProducts[0]['id'])
+
+        assert createdProduct is not None
+        assert createdProduct['id'] == str(self.createdProducts[0]['id'])
+
+    def test_CreateProduct_ProductNotCreatedWithCategoryId15_Fail(self):
         print("\nWrong product data to create product entity\n")
-        response = self.productController.create(self.data['invalid_product'])
+        response = self.productController.create(self.data['invalid_product_with_category_15'])
         self.createdProducts.append(response)
         assert Validator.validate(response, self.defaultResponseScheme)
 
