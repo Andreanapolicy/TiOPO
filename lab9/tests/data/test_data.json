@@ -65,17 +65,6 @@
         "description": "Da chto za poeb???",
         "hit": "2"
     },
-    "valid_product_with_status_0": {
-        "category_id": 1,
-        "title": "Title",
-        "content": "content",
-        "price": "300",
-        "old_price": "299.9",
-        "status": "0",
-        "keywords": "fist",
-        "description": "Do u know, what u get for 300 bucks",
-        "hit": "1"
-    },
     "valid_product_with_status_1": {
         "category_id": 1,
         "title": "Title",
