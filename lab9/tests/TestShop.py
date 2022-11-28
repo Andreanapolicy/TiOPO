@@ -78,8 +78,19 @@ class TestShop(unittest.TestCase):
         assert createdProduct['id'] == str(self.createdProducts[0]['id'])
 
     def test_CreateProduct_ProductNotCreatedWithCategoryId15_Fail(self):
-        print("\nWrong product data to create product entity\n")
         response = self.productController.create(self.data['invalid_product_with_category_15'])
+        self.createdProducts.append(response)
+        assert Validator.validate(response, self.defaultResponseScheme)
+
+        response = self.productController.getAll()
+        createdProduct = GetItemById(response, self.createdProducts[0]['id'])
+
+        assert createdProduct is None
+        print("\nWrong category id to create product entity\n")
+        self.fail('Wrong category id to create product entity')
+
+    def test_CreateProduct_ProductCreatedWithHit1_Success(self):
+        response = self.productController.create(self.data['valid_product_with_hit_1'])
         self.createdProducts.append(response)
         assert Validator.validate(response, self.defaultResponseScheme)
 
@@ -88,6 +99,19 @@ class TestShop(unittest.TestCase):
 
         assert createdProduct is not None
         assert createdProduct['id'] == str(self.createdProducts[0]['id'])
+
+    def test_CreateProduct_ProductCreatedWithHit2_Fail(self):
+        print("\nWrong hit to create product entity\n")
+        response = self.productController.create(self.data['invalid_product_with_hit_2'])
+        print(response)
+        self.createdProducts.append(response)
+        assert Validator.validate(response, self.defaultResponseScheme)
+
+        response = self.productController.getAll()
+        createdProduct = GetItemById(response, self.createdProducts[0]['id'])
+
+        assert createdProduct is None
+        self.fail()
 
     def test_EditProduct_ProductEditedBySameProduct_Success(self):
         response = self.productController.create(self.data['valid_product'])
