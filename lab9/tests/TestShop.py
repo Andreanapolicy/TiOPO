@@ -18,6 +18,28 @@ def GetItemById(items, id):
 
     return createdProduct
 
+DEFAULT_COMPARER_KEYS = [
+    'category_id',
+    'title',
+    'content',
+    'price',
+    'old_price',
+    'status',
+    'keywords',
+    'description',
+    'hit',
+]
+
+def AreProductsEqual(firstItem, secondItem, keys = None):
+    if keys is None:
+        keys = DEFAULT_COMPARER_KEYS
+
+    for key in keys:
+        if firstItem[key] != secondItem[key]:
+            return False
+
+    return True
+
 
 class TestShop(unittest.TestCase):
     def setUp(self):
@@ -62,10 +84,11 @@ class TestShop(unittest.TestCase):
 
         response = self.productController.getAll()
         createdProduct = GetItemById(response, self.createdProducts[0]['id'])
+        assert AreProductsEqual(createdProduct, self.data['valid_product'])
 
         assert createdProduct is not None
         assert createdProduct['id'] == str(self.createdProducts[0]['id'])
-
+# TODO: compare result
     def test_CreateProduct_ProductCreatedWithCategoryId14_Success(self):
         response = self.productController.create(self.data['valid_product_with_category_14'])
         self.createdProducts.append(response)

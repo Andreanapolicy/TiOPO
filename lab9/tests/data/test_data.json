@@ -1,7 +1,7 @@
 {
     "valid_product": {
         "category_id": "2",
-        "title": "title in title",
+        "title": "some unique title",
         "content": "content",
         "price": "300",
         "old_price": "299.9",
