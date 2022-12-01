@@ -88,7 +88,7 @@ class TestShop(unittest.TestCase):
 
         assert createdProduct is not None
         assert createdProduct['id'] == str(self.createdProducts[0]['id'])
-# TODO: compare result
+
     def test_CreateProduct_ProductCreatedWithCategoryId14_Success(self):
         response = self.productController.create(self.data['valid_product_with_category_14'])
         self.createdProducts.append(response)
@@ -96,6 +96,7 @@ class TestShop(unittest.TestCase):
 
         response = self.productController.getAll()
         createdProduct = GetItemById(response, self.createdProducts[0]['id'])
+        assert AreProductsEqual(createdProduct, self.data['valid_product_with_category_14'])
 
         assert createdProduct is not None
         assert createdProduct['id'] == str(self.createdProducts[0]['id'])
@@ -119,6 +120,7 @@ class TestShop(unittest.TestCase):
 
         response = self.productController.getAll()
         createdProduct = GetItemById(response, self.createdProducts[0]['id'])
+        assert AreProductsEqual(createdProduct, self.data['valid_product_with_hit_1'])
 
         assert createdProduct is not None
         assert createdProduct['id'] == str(self.createdProducts[0]['id'])
@@ -142,6 +144,7 @@ class TestShop(unittest.TestCase):
 
         response = self.productController.getAll()
         createdProduct = GetItemById(response, self.createdProducts[0]['id'])
+        assert AreProductsEqual(createdProduct, self.data['valid_product_with_status_1'])
 
         assert createdProduct is not None
         assert createdProduct['id'] == str(self.createdProducts[0]['id'])
@@ -178,7 +181,7 @@ class TestShop(unittest.TestCase):
         newAlias = newProduct.pop('alias', None)
 
         assert response['status'] == 1
-        assert newProduct == createdProduct
+        assert AreProductsEqual(createdProduct, self.data['valid_product'])
         assert createdAlias == newAlias + '-' + str(self.createdProducts[0]['id'])
 
     def test_EditProduct_EditByInvalidProductWithInvalidCategory_ProductDoesNotChanged_Success(self):
@@ -197,7 +200,7 @@ class TestShop(unittest.TestCase):
             response = self.productController.getAll()
             createdProduct = GetItemById(response, self.createdProducts[0]['id'])
 
-            assert createdProduct['category_id'] != newProduct['category_id']
+            assert AreProductsEqual(createdProduct, self.data['valid_product'])
         except Exception as exception:
             print("\nWrong product data to edit product entity\n")
             self.fail('Caught this error: ' + repr(exception))
@@ -218,7 +221,7 @@ class TestShop(unittest.TestCase):
             response = self.productController.getAll()
             createdProduct = GetItemById(response, self.createdProducts[0]['id'])
 
-            assert createdProduct['hit'] != newProduct['hit']
+            assert AreProductsEqual(createdProduct, self.data['valid_product'])
         except Exception as exception:
             print("\nWrong product data to edit product entity\n")
             self.fail('Caught this error: ' + repr(exception))
@@ -240,6 +243,7 @@ class TestShop(unittest.TestCase):
             createdProduct = GetItemById(response, self.createdProducts[0]['id'])
 
             assert createdProduct['status'] != newProduct['status']
+            assert AreProductsEqual(createdProduct, self.data['valid_product'])
         except Exception as exception:
             print("\nWrong product data to edit product entity\n")
             self.fail('Caught this error: ' + repr(exception))
@@ -258,10 +262,8 @@ class TestShop(unittest.TestCase):
         response = self.productController.edit(newProduct)
         updatedProduct = GetItemById(self.productController.getAll(), self.createdProducts[0]['id'])
 
-        createdProduct.pop('alias', None)
-        updatedProduct.pop('alias', None)
         assert response['status'] == 1
-        assert updatedProduct == createdProduct
+        assert AreProductsEqual(updatedProduct, createdProduct)
 
     def test_GenerateAlias_NewProduct_Success(self):
         self.createdProducts.append(self.productController.create(self.data['valid_product']))

@@ -1,7 +1,7 @@
 {
     "valid_product": {
         "category_id": "2",
-        "title": "some unique title",
+        "title": "asdknawj wdawdjl",
         "content": "content",
         "price": "300",
         "old_price": "299.9",
@@ -22,7 +22,7 @@
         "hit": "1"
     },
     "valid_product_with_category_14": {
-        "category_id": 14,
+        "category_id": "14",
         "title": "title in title",
         "content": "content",
         "price": "300",
@@ -33,7 +33,7 @@
         "hit": "1"
     },
     "invalid_product_with_category_15": {
-        "category_id": 15,
+        "category_id": "15",
         "title": "Title",
         "content": "content",
         "price": "300",
@@ -44,7 +44,7 @@
         "hit": "1"
     },
     "valid_product_with_hit_1": {
-        "category_id": 1,
+        "category_id": "1",
         "title": "Title",
         "content": "content",
         "price": "300",
@@ -55,7 +55,7 @@
         "hit": "1"
     },
     "invalid_product_with_hit_2": {
-        "category_id": 1,
+        "category_id": "1",
         "title": "Title",
         "content": "content",
         "price": "300",
@@ -66,7 +66,7 @@
         "hit": "2"
     },
     "valid_product_with_status_1": {
-        "category_id": 1,
+        "category_id": "1",
         "title": "Title",
         "content": "content",
         "price": "300",
@@ -77,7 +77,7 @@
         "hit": "1"
     },
     "invalid_product_with_status_2": {
-        "category_id": 1,
+        "category_id": "1",
         "title": "Title",
         "content": "content",
         "price": "300",
