@@ -58,8 +58,8 @@ class TestShop(unittest.TestCase):
     def test_GetAllProducts_ProductListHaveToBeNotEmpty_Success(self):
         response = self.productController.getAll()
 
-        assert Validator.validate(response, self.productListResponseScheme)
-        assert len(response) > 0
+        self.assertTrue(Validator.validate(response, self.productListResponseScheme), "error, response from get all method is not valid")
+        self.assertTrue(len(response) > 0, "error, there are no products")
 
     def test_DeleteProduct_Success(self):
         product = self.productController.create(self.data['valid_product'])
@@ -69,7 +69,7 @@ class TestShop(unittest.TestCase):
         response = self.productController.getAll()
         createdProduct = GetItemById(response, product['id'])
 
-        assert createdProduct is None
+        self.assertTrue(createdProduct is None, "error, product was not deleted")
 
     def test_DeleteProduct_Fail(self):
         response = self.productController.deleteById(0)
