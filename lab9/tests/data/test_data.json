@@ -1,7 +1,7 @@
 {
     "valid_product": {
         "category_id": "2",
-        "title": "asdknawj wdawdjl",
+        "title": "asdknaaj wdawdjl",
         "content": "content",
         "price": "300",
         "old_price": "299.9",
@@ -63,7 +63,7 @@
         "status": "1",
         "keywords": "fist",
         "description": "Da chto za poeb???",
-        "hit": "2"
+        "hit": 2
     },
     "valid_product_with_status_1": {
         "category_id": "1",

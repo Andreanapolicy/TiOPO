@@ -74,97 +74,86 @@ class TestShop(unittest.TestCase):
     def test_DeleteProduct_Fail(self):
         response = self.productController.deleteById(0)
 
-        print("\nWrong id to delete product\n")
-        assert response['status'] == 1
+        self.assertTrue(response['status'] == 1, "error, response status is not success")
 
     def test_CreateProduct_ProductCreated_Success(self):
         response = self.productController.create(self.data['valid_product'])
         self.createdProducts.append(response)
-        assert Validator.validate(response, self.defaultResponseScheme)
+        self.assertTrue(Validator.validate(response, self.defaultResponseScheme), "error, response from create method is not valid")
 
         response = self.productController.getAll()
         createdProduct = GetItemById(response, self.createdProducts[0]['id'])
-        assert AreProductsEqual(createdProduct, self.data['valid_product'])
 
-        assert createdProduct is not None
-        assert createdProduct['id'] == str(self.createdProducts[0]['id'])
+        self.assertTrue(createdProduct is not None, "error, product does not created")
+        self.assertTrue(AreProductsEqual(createdProduct, self.data['valid_product']), "error, created product data is not equal to create-data")
 
     def test_CreateProduct_ProductCreatedWithCategoryId14_Success(self):
         response = self.productController.create(self.data['valid_product_with_category_14'])
         self.createdProducts.append(response)
-        assert Validator.validate(response, self.defaultResponseScheme)
+        self.assertTrue(Validator.validate(response, self.defaultResponseScheme), "error, response from create method is not valid")
 
         response = self.productController.getAll()
         createdProduct = GetItemById(response, self.createdProducts[0]['id'])
-        assert AreProductsEqual(createdProduct, self.data['valid_product_with_category_14'])
 
-        assert createdProduct is not None
-        assert createdProduct['id'] == str(self.createdProducts[0]['id'])
+        self.assertTrue(createdProduct is not None, "error, product does not created")
+        self.assertTrue(AreProductsEqual(createdProduct, self.data['valid_product_with_category_14']), "error, created product data is not equal to create-data")
 
     def test_CreateProduct_ProductCreatedWithCategoryId15_Fail(self):
         response = self.productController.create(self.data['invalid_product_with_category_15'])
         self.createdProducts.append(response)
-        assert Validator.validate(response, self.defaultResponseScheme)
+        self.assertTrue(Validator.validate(response, self.defaultResponseScheme), "error, response from create method is not valid")
 
         response = self.productController.getAll()
         createdProduct = GetItemById(response, self.createdProducts[0]['id'])
 
-        assert createdProduct is None
-        print("\nWrong category id to create product entity\n")
-        self.fail('Wrong category id to create product entity')
+        self.assertTrue(createdProduct is not None, "error, wrong category id to create product entity")
 
     def test_CreateProduct_ProductCreatedWithHit1_Success(self):
         response = self.productController.create(self.data['valid_product_with_hit_1'])
         self.createdProducts.append(response)
-        assert Validator.validate(response, self.defaultResponseScheme)
+        self.assertTrue(Validator.validate(response, self.defaultResponseScheme), "error, response from create method is not valid")
 
         response = self.productController.getAll()
         createdProduct = GetItemById(response, self.createdProducts[0]['id'])
-        assert AreProductsEqual(createdProduct, self.data['valid_product_with_hit_1'])
 
-        assert createdProduct is not None
-        assert createdProduct['id'] == str(self.createdProducts[0]['id'])
+        self.assertTrue(createdProduct is not None, "error, product does not created")
+        self.assertTrue(AreProductsEqual(createdProduct, self.data['valid_product_with_hit_1']), "error, created product data is not equal to create-data")
 
     def test_CreateProduct_ProductCreatedWithHit2_Fail(self):
-        print("\nWrong hit to create product entity\n")
         response = self.productController.create(self.data['invalid_product_with_hit_2'])
         self.createdProducts.append(response)
-        assert Validator.validate(response, self.defaultResponseScheme)
+        self.assertTrue(Validator.validate(response, self.defaultResponseScheme), "error, response from create method is not valid")
 
         response = self.productController.getAll()
         createdProduct = GetItemById(response, self.createdProducts[0]['id'])
 
-        assert createdProduct is None
-        self.fail()
+        self.assertTrue(createdProduct is not None, "error, wrong hit id to create product entity")
 
     def test_CreateProduct_ProductCreatedWithStatus1_Success(self):
         response = self.productController.create(self.data['valid_product_with_status_1'])
         self.createdProducts.append(response)
-        assert Validator.validate(response, self.defaultResponseScheme)
+        self.assertTrue(Validator.validate(response, self.defaultResponseScheme), "error, response from create method is not valid")
 
         response = self.productController.getAll()
         createdProduct = GetItemById(response, self.createdProducts[0]['id'])
-        assert AreProductsEqual(createdProduct, self.data['valid_product_with_status_1'])
 
-        assert createdProduct is not None
-        assert createdProduct['id'] == str(self.createdProducts[0]['id'])
+        self.assertTrue(createdProduct is not None, "error, product does not created")
+        self.assertTrue(AreProductsEqual(createdProduct, self.data['valid_product_with_status_1']), "error, created product data is not equal to create-data")
 
     def test_CreateProduct_ProductCreatedWithStatus2_Fail(self):
-        print("\nWrong status to create product entity\n")
         response = self.productController.create(self.data['invalid_product_with_status_2'])
         self.createdProducts.append(response)
-        assert Validator.validate(response, self.defaultResponseScheme)
+        self.assertTrue(Validator.validate(response, self.defaultResponseScheme), "error, response from create method is not valid")
 
         response = self.productController.getAll()
         createdProduct = GetItemById(response, self.createdProducts[0]['id'])
 
-        assert createdProduct is None
-        self.fail()
+        self.assertTrue(createdProduct is not None, "error, wrong status to create product entity")
 
     def test_EditProduct_ProductEditedBySameProduct_Success(self):
         response = self.productController.create(self.data['valid_product'])
         self.createdProducts.append(response)
-        assert Validator.validate(response, self.defaultResponseScheme)
+        self.assertTrue(Validator.validate(response, self.defaultResponseScheme), "error, create response is invalid")
 
         response = self.productController.getAll()
         createdProduct = GetItemById(response, self.createdProducts[0]['id'])
@@ -173,21 +162,21 @@ class TestShop(unittest.TestCase):
         newProduct.update(self.data['valid_product'])
 
         response = self.productController.edit(newProduct)
-        assert Validator.validate(response, self.defaultResponseScheme)
+        self.assertTrue(Validator.validate(response, self.defaultResponseScheme), "error, edit response is invalid")
 
         createdProduct = GetItemById(self.productController.getAll(), self.createdProducts[0]['id'])
 
         createdAlias = createdProduct.pop('alias', None)
         newAlias = newProduct.pop('alias', None)
 
-        assert response['status'] == 1
-        assert AreProductsEqual(createdProduct, self.data['valid_product'])
-        assert createdAlias == newAlias + '-' + str(self.createdProducts[0]['id'])
+        self.assertTrue(response['status'] == 1, "error, response status is fail")
+        self.assertTrue(AreProductsEqual(createdProduct, self.data['valid_product']), "error, created product data is not equal to update-data")
+        self.assertTrue(createdAlias == (newAlias + '-' + str(self.createdProducts[0]['id'])), "error, alias generated invalid")
 
     def test_EditProduct_EditByInvalidProductWithInvalidCategory_ProductDoesNotChanged_Success(self):
         response = self.productController.create(self.data['valid_product'])
         self.createdProducts.append(response)
-        assert Validator.validate(response, self.defaultResponseScheme)
+        self.assertTrue(Validator.validate(response, self.defaultResponseScheme), "error, create response is invalid")
 
         response = self.productController.getAll()
         createdProduct = GetItemById(response, self.createdProducts[0]['id'])
@@ -200,15 +189,14 @@ class TestShop(unittest.TestCase):
             response = self.productController.getAll()
             createdProduct = GetItemById(response, self.createdProducts[0]['id'])
 
-            assert AreProductsEqual(createdProduct, self.data['valid_product'])
+            self.assertTrue(AreProductsEqual(createdProduct, self.data['valid_product']), "error, created product data is not equal to update-data")
         except Exception as exception:
-            print("\nWrong product data to edit product entity\n")
-            self.fail('Caught this error: ' + repr(exception))
+            self.fail('Wrong product data to edit product entity')
 
     def test_EditProduct_EditByInvalidProductWithInvalidHit_ProductDoesNotChanged_Success(self):
         response = self.productController.create(self.data['valid_product'])
         self.createdProducts.append(response)
-        assert Validator.validate(response, self.defaultResponseScheme)
+        self.assertTrue(Validator.validate(response, self.defaultResponseScheme), "error, create response is invalid")
 
         response = self.productController.getAll()
         createdProduct = GetItemById(response, self.createdProducts[0]['id'])
@@ -221,15 +209,14 @@ class TestShop(unittest.TestCase):
             response = self.productController.getAll()
             createdProduct = GetItemById(response, self.createdProducts[0]['id'])
 
-            assert AreProductsEqual(createdProduct, self.data['valid_product'])
+            self.assertTrue(AreProductsEqual(createdProduct, self.data['valid_product']), "error, created product data is not equal to update-data")
         except Exception as exception:
-            print("\nWrong product data to edit product entity\n")
-            self.fail('Caught this error: ' + repr(exception))
+            self.fail('Wrong product data to edit product entity')
 
     def test_EditProduct_EditByInvalidProductWithInvalidStatus_ProductDoesNotChanged_Success(self):
         response = self.productController.create(self.data['valid_product'])
         self.createdProducts.append(response)
-        assert Validator.validate(response, self.defaultResponseScheme)
+        self.assertTrue(Validator.validate(response, self.defaultResponseScheme), "error, create response is invalid")
 
         response = self.productController.getAll()
         createdProduct = GetItemById(response, self.createdProducts[0]['id'])
@@ -242,16 +229,14 @@ class TestShop(unittest.TestCase):
             response = self.productController.getAll()
             createdProduct = GetItemById(response, self.createdProducts[0]['id'])
 
-            assert createdProduct['status'] != newProduct['status']
-            assert AreProductsEqual(createdProduct, self.data['valid_product'])
+            self.assertTrue(AreProductsEqual(createdProduct, self.data['valid_product']), "error, created product data is not equal to update-data")
         except Exception as exception:
-            print("\nWrong product data to edit product entity\n")
-            self.fail('Caught this error: ' + repr(exception))
+            self.fail('Wrong product data to edit product entity')
 
     def test_EditProduct_EditByEmptyProductData_Success(self):
         response = self.productController.create(self.data['valid_product'])
         self.createdProducts.append(response)
-        assert Validator.validate(response, self.defaultResponseScheme)
+        self.assertTrue(Validator.validate(response, self.defaultResponseScheme), "error, create response is invalid")
 
         response = self.productController.getAll()
         createdProduct = GetItemById(response, self.createdProducts[0]['id'])
@@ -262,8 +247,8 @@ class TestShop(unittest.TestCase):
         response = self.productController.edit(newProduct)
         updatedProduct = GetItemById(self.productController.getAll(), self.createdProducts[0]['id'])
 
-        assert response['status'] == 1
-        assert AreProductsEqual(updatedProduct, createdProduct)
+        self.assertTrue(response['status'] == 1, "error, response status for edit is fail")
+        self.assertTrue(AreProductsEqual(updatedProduct, createdProduct), "error, created product data is not equal to updated product data")
 
     def test_GenerateAlias_NewProduct_Success(self):
         self.createdProducts.append(self.productController.create(self.data['valid_product']))
@@ -274,8 +259,8 @@ class TestShop(unittest.TestCase):
         firstProduct = GetItemById(response, self.createdProducts[0]['id'])
         secondProduct = GetItemById(response, self.createdProducts[1]['id'])
 
-        assert firstProduct['alias'] == slugify(self.data['valid_product']['title'])
-        assert secondProduct['alias'] == slugify(self.data['valid_product']['title']) + '-0'
+        self.assertTrue(firstProduct['alias'] == slugify(self.data['valid_product']['title']), 'error, alias was equal to slugify title')
+        self.assertTrue(secondProduct['alias'] == slugify(self.data['valid_product']['title']) + '-0', 'error, alias was equal to slugify title and -0')
 
     def test_EditAliasByEditingProductTitle_NewProduct_Success(self):
         self.createdProducts.append(self.productController.create(self.data['valid_product']))
@@ -297,8 +282,8 @@ class TestShop(unittest.TestCase):
         firstProduct = GetItemById(response, self.createdProducts[0]['id'])
         secondProduct = GetItemById(response, self.createdProducts[1]['id'])
 
-        assert firstProduct['alias'] == slugify(self.data['another_one_valid_product']['title'])
-        assert secondProduct['alias'] == slugify(self.data['another_one_valid_product']['title']) + '-' + secondProduct['id']
+        self.assertTrue(firstProduct['alias'] == slugify(self.data['another_one_valid_product']['title']), 'error, alias was equal to slugify title')
+        self.assertTrue(secondProduct['alias'] == slugify(self.data['another_one_valid_product']['title']) + '-' + secondProduct['id'], 'error, alias was equal to slugify title and -id')
 
     def test_EditAliasBySameTitle_SameProduct_Success(self):
         self.createdProducts.append(self.productController.create(self.data['valid_product']))
@@ -315,4 +300,4 @@ class TestShop(unittest.TestCase):
 
         firstProduct = GetItemById(response, self.createdProducts[0]['id'])
 
-        assert firstProduct['alias'] == slugify(self.data['valid_product']['title']) + '-' + str(self.createdProducts[0]['id'])
+        self.assertTrue(firstProduct['alias'] == slugify(self.data['valid_product']['title']) + '-' + str(self.createdProducts[0]['id']), 'error, alias was invalid created after editing')
