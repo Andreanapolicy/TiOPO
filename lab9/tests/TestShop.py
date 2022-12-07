@@ -102,7 +102,7 @@ class TestShop(unittest.TestCase):
         ("invalid_product_with_hit_2_Success", "valid_product", "invalid_product_with_hit_2", False),
         ("null_product_Success", "null_product", "invalid_product_with_status_2", False),
     ])
-    def test_EditProduct(self, description, startingData, updatingData, willUpdate):
+    def test_EditProductByDefaultWay(self, description, startingData, updatingData, willUpdate):
         try:
             response = self.productController.create(self.data[startingData])
             self.createdProducts.append(response)
@@ -116,83 +116,68 @@ class TestShop(unittest.TestCase):
             response = self.productController.getAll()
             createdProduct = GetItemById(response, self.createdProducts[0]['id'])
 
+            self.assertTrue(response['status'] == 1, "error, response status is fail")
             self.assertTrue(
                 AreProductsEqual(createdProduct, self.data[updatingData if willUpdate else startingData]),
                 "error, created product data is not equal to update-data")
         except Exception as exception:
             self.fail('Wrong product data to edit product entity')
 
-    # def test_EditProduct_ProductEditedBySameProduct_Success(self):
-    #     response = self.productController.create(self.data['valid_product'])
-    #     self.createdProducts.append(response)
-    #     self.assertTrue(Validator.validate(response, self.defaultResponseScheme), "error, create response is invalid")
-    #
-    #     response = self.productController.getAll()
-    #     createdProduct = GetItemById(response, self.createdProducts[0]['id'])
-    #
-    #     newProduct = createdProduct
-    #     newProduct.update(self.data['valid_product'])
-    #
-    #     response = self.productController.edit(newProduct)
-    #     self.assertTrue(Validator.validate(response, self.defaultResponseScheme), "error, edit response is invalid")
-    #
-    #     createdProduct = GetItemById(self.productController.getAll(), self.createdProducts[0]['id'])
-    #
-    #     createdAlias = createdProduct.pop('alias', None)
-    #     newAlias = newProduct.pop('alias', None)
-    #
-    #     self.assertTrue(response['status'] == 1, "error, response status is fail")
-    #     self.assertTrue(AreProductsEqual(createdProduct, self.data['valid_product']), "error, created product data is not equal to update-data")
-    #     self.assertTrue(createdAlias == (newAlias + '-' + str(self.createdProducts[0]['id'])), "error, alias generated invalid")
+    def test_GenerateAliasByCreatingNewProduct_Success(self):
+        self.createdProducts.append(self.productController.create(self.data['valid_product']))
+        self.createdProducts.append(self.productController.create(self.data['valid_product']))
 
-    # def test_GenerateAlias_NewProduct_Success(self):
-    #     self.createdProducts.append(self.productController.create(self.data['valid_product']))
-    #     self.createdProducts.append(self.productController.create(self.data['valid_product']))
-    #
-    #     response = self.productController.getAll()
-    #
-    #     firstProduct = GetItemById(response, self.createdProducts[0]['id'])
-    #     secondProduct = GetItemById(response, self.createdProducts[1]['id'])
-    #
-    #     self.assertTrue(firstProduct['alias'] == slugify(self.data['valid_product']['title']), 'error, alias was equal to slugify title')
-    #     self.assertTrue(secondProduct['alias'] == slugify(self.data['valid_product']['title']) + '-0', 'error, alias was equal to slugify title and -0')
-    #
-    # def test_EditAliasByEditingProductTitle_NewProduct_Success(self):
-    #     self.createdProducts.append(self.productController.create(self.data['valid_product']))
-    #     self.createdProducts.append(self.productController.create(self.data['valid_product']))
-    #
-    #     response = self.productController.getAll()
-    #
-    #     firstProduct = GetItemById(response, self.createdProducts[0]['id'])
-    #     secondProduct = GetItemById(response, self.createdProducts[1]['id'])
-    #
-    #     firstProduct.update(self.data['another_one_valid_product'])
-    #     secondProduct.update(self.data['another_one_valid_product'])
-    #
-    #     self.productController.edit(firstProduct)
-    #     self.productController.edit(secondProduct)
-    #
-    #     response = self.productController.getAll()
-    #
-    #     firstProduct = GetItemById(response, self.createdProducts[0]['id'])
-    #     secondProduct = GetItemById(response, self.createdProducts[1]['id'])
-    #
-    #     self.assertTrue(firstProduct['alias'] == slugify(self.data['another_one_valid_product']['title']), 'error, alias was equal to slugify title')
-    #     self.assertTrue(secondProduct['alias'] == slugify(self.data['another_one_valid_product']['title']) + '-' + secondProduct['id'], 'error, alias was equal to slugify title and -id')
-    #
-    # def test_EditAliasBySameTitle_SameProduct_Success(self):
-    #     self.createdProducts.append(self.productController.create(self.data['valid_product']))
-    #
-    #     response = self.productController.getAll()
-    #
-    #     firstProduct = GetItemById(response, self.createdProducts[0]['id'])
-    #
-    #     firstProduct.update(self.data['valid_product'])
-    #
-    #     self.productController.edit(firstProduct)
-    #
-    #     response = self.productController.getAll()
-    #
-    #     firstProduct = GetItemById(response, self.createdProducts[0]['id'])
-    #
-    #     self.assertTrue(firstProduct['alias'] == slugify(self.data['valid_product']['title']) + '-' + str(self.createdProducts[0]['id']), 'error, alias was invalid created after editing')
+        response = self.productController.getAll()
+
+        firstProduct = GetItemById(response, self.createdProducts[0]['id'])
+        secondProduct = GetItemById(response, self.createdProducts[1]['id'])
+
+        self.assertTrue(firstProduct['alias'] == slugify(self.data['valid_product']['title']), 'error, alias was equal to slugify title')
+        self.assertTrue(secondProduct['alias'] == slugify(self.data['valid_product']['title']) + '-0', 'error, alias was equal to slugify title and -0')
+
+    def test_EditAlias_EditProductBySameProduct_Success(self):
+        response = self.productController.create(self.data['valid_product'])
+        self.createdProducts.append(response)
+        self.assertTrue(Validator.validate(response, self.defaultResponseScheme), "error, create response is invalid")
+
+        response = self.productController.getAll()
+        createdProduct = GetItemById(response, self.createdProducts[0]['id'])
+
+        newProduct = createdProduct
+        newProduct.update(self.data['valid_product'])
+
+        response = self.productController.edit(newProduct)
+        self.assertTrue(Validator.validate(response, self.defaultResponseScheme), "error, edit response is invalid")
+
+        createdProduct = GetItemById(self.productController.getAll(), self.createdProducts[0]['id'])
+
+        createdAlias = createdProduct.pop('alias', None)
+        newAlias = newProduct.pop('alias', None)
+
+        self.assertTrue(response['status'] == 1, "error, response status is fail")
+        self.assertTrue(AreProductsEqual(createdProduct, self.data['valid_product']), "error, created product data is not equal to update-data")
+        self.assertTrue(createdAlias == (newAlias + '-' + str(self.createdProducts[0]['id'])), "error, alias generated invalid")
+
+    def test_EditAlias_CreatingSameProductsAndEditingByAnotherSame_Success(self):
+        self.createdProducts.append(self.productController.create(self.data['valid_product']))
+        self.createdProducts.append(self.productController.create(self.data['valid_product']))
+
+        response = self.productController.getAll()
+
+        firstProduct = GetItemById(response, self.createdProducts[0]['id'])
+        secondProduct = GetItemById(response, self.createdProducts[1]['id'])
+
+        firstProduct.update(self.data['another_one_valid_product'])
+        secondProduct.update(self.data['another_one_valid_product'])
+
+        self.productController.edit(firstProduct)
+        self.productController.edit(secondProduct)
+
+        response = self.productController.getAll()
+
+        firstProduct = GetItemById(response, self.createdProducts[0]['id'])
+        secondProduct = GetItemById(response, self.createdProducts[1]['id'])
+
+        self.assertTrue(response['status'] == 1, "error, response status is fail")
+        self.assertTrue(firstProduct['alias'] == slugify(self.data['another_one_valid_product']['title']), 'error, alias was equal to slugify title')
+        self.assertTrue(secondProduct['alias'] == slugify(self.data['another_one_valid_product']['title']) + '-' + secondProduct['id'], 'error, alias was equal to slugify title and -id')
