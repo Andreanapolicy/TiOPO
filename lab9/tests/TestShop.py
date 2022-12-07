@@ -100,7 +100,8 @@ class TestShop(unittest.TestCase):
         ("valid_product_Success", "valid_product", "valid_product", True),
         ("invalid_product_with_category_15_Success", "valid_product", "invalid_product_with_category_15", False),
         ("invalid_product_with_hit_2_Success", "valid_product", "invalid_product_with_hit_2", False),
-        ("null_product_Success", "null_product", "invalid_product_with_status_2", False),
+        ("invalid_product_with_status_2_Success", "null_product", "invalid_product_with_status_2", False),
+        ("null_product_Success", "null_product", "null_product", False),
     ])
     def test_EditProductByDefaultWay(self, description, startingData, updatingData, willUpdate):
         try:
@@ -135,7 +136,7 @@ class TestShop(unittest.TestCase):
         self.assertTrue(firstProduct['alias'] == slugify(self.data['valid_product']['title']), 'error, alias was equal to slugify title')
         self.assertTrue(secondProduct['alias'] == slugify(self.data['valid_product']['title']) + '-0', 'error, alias was equal to slugify title and -0')
 
-    def test_EditAlias_EditProductBySameProduct_Success(self):
+    def test_EditAlias_EditingProductBySameProduct_Success(self):
         response = self.productController.create(self.data['valid_product'])
         self.createdProducts.append(response)
         self.assertTrue(Validator.validate(response, self.defaultResponseScheme), "error, create response is invalid")
