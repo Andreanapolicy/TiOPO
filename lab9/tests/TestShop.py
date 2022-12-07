@@ -3,7 +3,7 @@ import json
 from lab9.controller.ProductController import ProductController
 from lab9.validator.Validator import Validator
 from slugify import slugify
-import unidecode
+from parameterized import parameterized
 
 def loadJSON(url):
     f = open(url)
