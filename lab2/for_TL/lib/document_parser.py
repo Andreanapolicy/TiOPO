@@ -5,9 +5,6 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urljoin
 from url import Url, isValid, checkExtension, domain
 
-RETRY_TIMEOUT = 60
-REQUEST_TIMEOUT = 60
-RETRY_COUNT = 5
 
 VISITED_LINKS = set()
 INVALID_LINKS = set()
@@ -15,14 +12,17 @@ result = set()
 
 PREVIOUS_URL = ''
 
-def retryingGetting(url):
+def getDocument(url, isHead):
     response = requests.Response
-    for i in range(RETRY_COUNT):
+    for i in range(6):
         try:
-            response = requests.get(url, timeout=REQUEST_TIMEOUT)
+            if isHead:
+                response = requests.head(url, timeout=60)
+            else:
+                response = requests.get(url, timeout=60)
             if response.status_code < 500:
                 return response
-            time.sleep(RETRY_TIMEOUT)
+            time.sleep(60)
         except Exception:
             response.status_code = 500
             return response
@@ -36,11 +36,11 @@ def findAllLinks(url):
     links = set()
 
     if checkExtension(url):
-        currentRequest = headRetry(url)
+        currentRequest = getDocument(url, True)
         result.add(Url(url, PREVIOUS_URL, currentRequest.status_code))
         return links
 
-    currentRequest = retryingGetting(url)
+    currentRequest = getDocument(url, False)
     result.add(Url(url, PREVIOUS_URL, currentRequest.status_code))
     if currentRequest.status_code >= 400:
         return links
@@ -84,19 +84,6 @@ def constructUrl(link):
     parsedValue = urlparse(link)
     link = parsedValue.scheme + '://' + parsedValue.netloc + parsedValue.path
     return link
-
-
-def headRetry(url):
-    response = requests.Response
-
-    for i in range(RETRY_COUNT):
-        response = requests.head(url, timeout=REQUEST_TIMEOUT)
-
-        if response.status_code < 500:
-            return response
-
-        time.sleep(RETRY_TIMEOUT)
-    return response
 
 
 def parse(url):
