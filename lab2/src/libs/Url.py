@@ -1,4 +1,24 @@
 def convertLinkToAbsolutePath(mainUrl, link):
+    extensions = {
+        'rar',
+        'pdf',
+        'mp4',
+        'doc',
+        'docx',
+        'xls',
+        'png',
+        'jpg',
+        'jpeg',
+        'zip',
+        'webp',
+        'webm',
+        'gif'
+    }
+
+    for extension in extensions:
+        if link.find(extension) != -1:
+            return None
+
     if link == '#':
         return mainUrl
 
